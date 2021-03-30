@@ -11,4 +11,3 @@ expressly prohibited.
 This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
-project
