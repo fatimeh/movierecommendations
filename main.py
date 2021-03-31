@@ -13,7 +13,7 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Tuple, Dict, Set
+from typing import Tuple, Dict, Set, Any
 
 # Reading .csv files
 
@@ -56,12 +56,12 @@ class Movie:
 class _Vertex:
     """
     A vertex in the graph.
-    
+
     Each vertex item is an instance of a Movie class.
-    
+
     The neighbours is a dictionary which maps the _Vertex object to the set of the traits
     which this Vertex and its neighbour have in common.
-    
+
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
 
@@ -74,7 +74,7 @@ class _Vertex:
         - all(self in u.neighbours for u in self.neighbours)
         - all(self.neighbours[v] != set() for v in self.neighbours)
     """
-    
+
     item: Movie
     neighbours: Dict[_Vertex, Set[str]]
 
@@ -83,4 +83,94 @@ class _Vertex:
         self.item = item
         self.neighbours = neighbours
 
+
 # Graph Class
+class _Graph:
+    """A weighted graph used to represent a movie network that keeps track of what trade each movie
+    have in similar.
+    There will be an edge between 2 movies if and only if there is at least 1 trade in common.
+    """
+    # Private Instance Attributes:
+    #     - _vertices:
+    #         A collection of the vertices contained in this graph.
+    #         Maps item to _WeightedVertex object.
+    _vertices: dict[Movie, _Vertex]
+
+    def __init__(self) -> None:
+        """Initialize an empty graph (no vertices or edges)."""
+        self._vertices = {}
+
+    def add_vertex(self, item: Movie) -> None:
+        """Add a vertex with the given item to this graph.
+
+        The new vertex is not adjacent to any other vertices.
+
+        Preconditions:
+            - item not in self._vertices
+        """
+        self._vertices[item] = _Vertex(item, dict())
+
+    def add_edge(self, item1: Movie, item2: Movie) -> None:
+        """Add an edge between the two vertices with the given items in this graph.
+
+        Raise a ValueError if item1 or item2 do not appear as vertices in this graph.
+
+        Preconditions:
+            - item1 != item2
+        """
+        if item1 in self._vertices and item2 in self._vertices:
+            common = [item1.release_year == item2.release_year, item1.genre == item2.genre,
+                      item1.duration == item2.duration, item1.country == item2.country,
+                      item1.language == item2.language, item1.director == item2.director]
+            if any(common):
+                v1 = self._vertices[item1]
+                v2 = self._vertices[item2]
+                name = ['release_year', 'genre', 'duration', 'country', 'language', 'director']
+                for i in range(0, 6):
+                    if not common[i]:
+                        name.remove(name[i])
+
+                v1.neighbours[v2] = set(name)
+                v2.neighbours[v1] = set(name)
+                return
+            else:
+                return
+        else:
+            raise ValueError
+
+    def get_common_trade(self, item1: Movie, item2: Movie) -> set:
+        """Return the common trade between the 2 movies.
+
+        Return an empty set if item1 and item2 are not adjacent.
+
+        Preconditions:
+            - item1 and item2 are vertices in this graph
+        """
+        v1 = self._vertices[item1]
+        v2 = self._vertices[item2]
+        return v1.neighbours.get(v2, set())
+
+    def adjacent(self, item1: Movie, item2: Movie) -> bool:
+        """Return whether item1 and item2 are adjacent vertices in this graph.
+
+        Return False if item1 or item2 do not appear as vertices in this graph.
+        """
+        if item1 in self._vertices and item2 in self._vertices:
+            v1 = self._vertices[item1]
+            return any(v2.item == item2 for v2 in v1.neighbours)
+        else:
+            return False
+
+    def get_neighbours(self, item: Movie) -> set:
+        """Return a set of the neighbours of the given item.
+
+        Note that the *items* which is the movie data type are returned, not the _Vertex objects
+        themselves.
+
+        Raise a ValueError if item does not appear as a vertex in this graph.
+        """
+        if item in self._vertices:
+            v = self._vertices[item]
+            return {neighbour.item for neighbour in v.neighbours}
+        else:
+            raise ValueError
