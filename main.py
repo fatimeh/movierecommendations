@@ -24,16 +24,13 @@ class Movie:
     A data class representing a movie.
 
     Instance Attributes:
-    - title: the title of the movie
-    - release_year: the year the movie was released
-    - genre: the genre(s) of the movie
-    - duration: the length of the movie (in minutes)
-    - country: the name of the country/countries the movie was originally released in
-    - language: the language the movie was written in
-    - director: the name of the person that directed the movie
-
-    Representation Invariants:
-
+        - title: the title of the movie
+        - release_year: the year the movie was released
+        - genre: the genre(s) of the movie
+        - duration: the length of the movie (in minutes)
+        - country: the name of the country/countries the movie was originally released in
+        - language: the language the movie was written in
+        - director: the name of the person that directed the movie
     """
     title: str
     release_year: int
