@@ -14,8 +14,38 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Tuple, Dict, Set, Any
+import pandas as pd
+
 
 # Reading .csv files
+def load_datasets(movies_file: str) -> Graph:
+    """
+    Return a Movie object based on the details regarding movies in the given datasets.
+
+    The Movie object class has multiple attributes that give information regarding the movies
+    and information regarding this attributes will be derived from the two input datasets.
+
+    Preconditions:
+        - movies_file is the path to a CSV file corresponding to the IMDb movies data.
+        - ratings_file is the path to a CSV file corresponding to the IMDb movie ratings data.
+    """
+    movie_graph = Graph()
+
+    attributes = {'title', 'year', 'genre', 'duration', 'country', 'language', 'director'}
+    movies = pd.read_csv(movies_file, usecols=lambda x: x in attributes)
+    # breakpoint()
+    for index in movies.index:
+        title = str(movies['title'][index])
+        release_year = int(movies['year'][index])
+        genre = tuple(movies['genre'][index].split(','))
+        duration = int(movies['duration'][index])
+        country = tuple(movies['country'][index].split(','))
+        language = str(movies['language'][index])
+        director = str(movies['director'][index])
+        movie = Movie(title, release_year, genre, duration, country, language, director)
+        movie_graph.add_vertex(movie)
+
+    return movie_graph
 
 
 # Movie Object Class
@@ -85,7 +115,7 @@ class _Vertex:
 
 
 # Graph Class
-class _Graph:
+class Graph:
     """A weighted graph used to represent a movie network that keeps track of what trade each movie
     have in similar.
     There will be an edge between 2 movies if and only if there is at least 1 trade in common.
