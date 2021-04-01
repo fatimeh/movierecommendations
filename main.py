@@ -89,7 +89,7 @@ class _Vertex:
 
     Each vertex item is an instance of a Movie class.
 
-    The neighbours is a set of tuples where the first element of tuple is a vertex object and the second element 
+    The neighbours is a set of tuples where the first element of tuple is a vertex object and the second element
     is a set of the traits that the vertex and its neighbour have in common.
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
@@ -101,7 +101,7 @@ class _Vertex:
 
     Representation Invariants:
         - all
-    
+
     """
 
     item: Movie
@@ -137,7 +137,7 @@ class Graph:
         Preconditions:
             - item not in self._vertices
         """
-        self._vertices[item.title] = _Vertex(item, dict())
+        self._vertices[item.title] = _Vertex(item, set())
 
     def add_edge(self, item1: str, item2: str) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -203,3 +203,4 @@ class Graph:
             return {neighbour.item for neighbour in v.neighbours}
         else:
             raise ValueError
+
