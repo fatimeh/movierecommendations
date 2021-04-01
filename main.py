@@ -89,8 +89,8 @@ class _Vertex:
 
     Each vertex item is an instance of a Movie class.
 
-    The neighbours is a set of tuples where the first element of tuple is a vertex object and the second element 
-    is a set of the traits that the vertex and its neighbour have in common.
+    The neighbours is a set of tuples where the first element of tuple is a vertex object and
+    the second element is a set of the traits that the vertex and its neighbour have in common.
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
@@ -99,6 +99,15 @@ class _Vertex:
         - item: The data stored in this vertex, representing a movie.
         - neighbours: The vertices that are adjacent to this vertex.
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    Representation Invariants:
+        - all
+
+=======
+>>>>>>> 10e2353e0e3ba014fb94da3e6d27ea175057e9c9
+>>>>>>> Stashed changes
     """
 
     item: Movie
@@ -134,7 +143,7 @@ class Graph:
         Preconditions:
             - item not in self._vertices
         """
-        self._vertices[item.title] = _Vertex(item, dict())
+        self._vertices[item.title] = _Vertex(item, set())
 
     def add_edge(self, item1: str, item2: str) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -156,8 +165,8 @@ class Graph:
                     if not common[i]:
                         name.remove(name[i])
 
-                v1.neighbours[v2] = set(name)
-                v2.neighbours[v1] = set(name)
+                v1.neighbours.add((v2, set(name)))
+                v2.neighbours.add((v1, set(name)))
                 return
             else:
                 return
@@ -174,7 +183,12 @@ class Graph:
         """
         v1 = self._vertices[item1]
         v2 = self._vertices[item2]
-        return v1.neighbours.get(v2, set())
+        common = set()
+        for vertex in v1.neighbours:
+            if vertex[0] == v2:
+                common = vertex[1]
+
+        return common
 
     def adjacent(self, item1: str, item2: str) -> bool:
         """Return whether item1 and item2 are adjacent vertices in this graph.
@@ -183,7 +197,7 @@ class Graph:
         """
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
-            return any(v2.item.title == item2 for v2 in v1.neighbours)
+            return any(v2[0].item.title == item2 for v2 in v1.neighbours)
         else:
             return False
 
@@ -197,6 +211,6 @@ class Graph:
         """
         if item in self._vertices:
             v = self._vertices[item]
-            return {neighbour.item for neighbour in v.neighbours}
+            return {neighbour[0].item for neighbour in v.neighbours}
         else:
             raise ValueError
