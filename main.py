@@ -90,7 +90,7 @@ class _Vertex:
     Each vertex item is an instance of a Movie class.
 
     The neighbours is a set of tuples where the first element of tuple is a vertex object and the second element 
-    is a set of the traits that the vertices have in common.
+    is a set of the traits that the vertex and its neighbour have in common.
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
@@ -100,7 +100,7 @@ class _Vertex:
         - neighbours: The vertices that are adjacent to this vertex.
 
     Representation Invariants:
-        - 
+        - all
     
     """
 
