@@ -39,7 +39,7 @@ def load_datasets(movies_file: str) -> Graph:
         release_year = int(movies['year'][index])
         genre = tuple(movies['genre'][index].split(','))
         duration = int(movies['duration'][index])
-        country = tuple(movies['country'][index].split(','))
+        country = tuple(str(movies['country'][index]).split(','))
         language = str(movies['language'][index])
         director = str(movies['director'][index])
         movie = Movie(title, release_year, genre, duration, country, language, director)
@@ -99,15 +99,10 @@ class _Vertex:
         - item: The data stored in this vertex, representing a movie.
         - neighbours: The vertices that are adjacent to this vertex.
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
     Representation Invariants:
         - all
 
-=======
->>>>>>> 10e2353e0e3ba014fb94da3e6d27ea175057e9c9
->>>>>>> Stashed changes
+
     """
 
     item: Movie
