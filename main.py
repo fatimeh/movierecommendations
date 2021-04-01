@@ -124,7 +124,7 @@ class Graph:
     #     - _vertices:
     #         A collection of the vertices contained in this graph.
     #         Maps item to _WeightedVertex object.
-    _vertices: dict[Movie, _Vertex]
+    _vertices: dict[str, _Vertex]
 
     def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
@@ -138,9 +138,9 @@ class Graph:
         Preconditions:
             - item not in self._vertices
         """
-        self._vertices[item] = _Vertex(item, dict())
+        self._vertices[item.title] = _Vertex(item, dict())
 
-    def add_edge(self, item1: Movie, item2: Movie) -> None:
+    def add_edge(self, item1: str, item2: str) -> None:
         """Add an edge between the two vertices with the given items in this graph.
 
         Raise a ValueError if item1 or item2 do not appear as vertices in this graph.
@@ -149,12 +149,12 @@ class Graph:
             - item1 != item2
         """
         if item1 in self._vertices and item2 in self._vertices:
-            common = [item1.release_year == item2.release_year, item1.genre == item2.genre,
-                      item1.duration == item2.duration, item1.country == item2.country,
-                      item1.language == item2.language, item1.director == item2.director]
+            v1 = self._vertices[item1]
+            v2 = self._vertices[item2]
+            common = [v1.item.release_year == v2.item.release_year, v1.item.genre == v2.item.genre,
+                      v1.item.duration == v2.item.duration, v1.item.country == v2.item.country,
+                      v1.item.language == v2.item.language, v1.item.director == v2.item.director]
             if any(common):
-                v1 = self._vertices[item1]
-                v2 = self._vertices[item2]
                 name = ['release_year', 'genre', 'duration', 'country', 'language', 'director']
                 for i in range(0, 6):
                     if not common[i]:
@@ -168,7 +168,7 @@ class Graph:
         else:
             raise ValueError
 
-    def get_common_trade(self, item1: Movie, item2: Movie) -> set:
+    def get_common_trade(self, item1: str, item2: str) -> set:
         """Return the common trade between the 2 movies.
 
         Return an empty set if item1 and item2 are not adjacent.
@@ -180,18 +180,18 @@ class Graph:
         v2 = self._vertices[item2]
         return v1.neighbours.get(v2, set())
 
-    def adjacent(self, item1: Movie, item2: Movie) -> bool:
+    def adjacent(self, item1: str, item2: str) -> bool:
         """Return whether item1 and item2 are adjacent vertices in this graph.
 
         Return False if item1 or item2 do not appear as vertices in this graph.
         """
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
-            return any(v2.item == item2 for v2 in v1.neighbours)
+            return any(v2.item.title == item2 for v2 in v1.neighbours)
         else:
             return False
 
-    def get_neighbours(self, item: Movie) -> set:
+    def get_neighbours(self, item: str) -> set:
         """Return a set of the neighbours of the given item.
 
         Note that the *items* which is the movie data type are returned, not the _Vertex objects
