@@ -102,13 +102,13 @@ class _Vertex:
     Representation Invariants:
         - self not in self.neighbours
         - all(self in u.neighbours for u in self.neighbours)
-        - all(self.neighbours[v] != set() for v in self.neighbours)
+    
     """
 
     item: Movie
-    neighbours: Dict[_Vertex, Set[str]]
+    neighbours: Set[Tuple[Movie, set]]
 
-    def __init__(self, item: Movie, neighbours: Dict[_Vertex, Set[str]]) -> None:
+    def __init__(self, item: Movie, neighbours: Set[Tuple[Movie, set]]) -> None:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
         self.neighbours = neighbours
