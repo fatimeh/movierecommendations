@@ -18,7 +18,7 @@ import pandas as pd
 
 
 # Reading .csv files
-def load_datasets(movies_file: str) -> Graph:
+def load_datasets(movies_file: str) -> MovieGraph:
     """
     Return a Movie object based on the details regarding movies in the given datasets.
 
@@ -29,7 +29,7 @@ def load_datasets(movies_file: str) -> Graph:
         - movies_file is the path to a CSV file corresponding to the IMDb movies data.
         - ratings_file is the path to a CSV file corresponding to the IMDb movie ratings data.
     """
-    movie_graph = Graph()
+    movie_graph = MovieGraph()
 
     attributes = {'title', 'year', 'genre', 'duration', 'country', 'language', 'director'}
     movies = pd.read_csv(movies_file, usecols=lambda x: x in attributes)
@@ -83,9 +83,9 @@ class Movie:
 
 
 # Vertex Class
-class _Vertex:
+class _MovieVertex:
     """
-    A vertex in the graph.
+    A vertex in the movie graph.
 
     Each vertex item is an instance of a Movie class.
 
@@ -102,16 +102,16 @@ class _Vertex:
     """
 
     item: Movie
-    neighbours: Set[Tuple[_Vertex, set]]
+    neighbours: Set[Tuple[_MovieVertex, set]]
 
-    def __init__(self, item: Movie, neighbours: Set[Tuple[_Vertex, set]]) -> None:
+    def __init__(self, item: Movie, neighbours: Set[Tuple[_MovieVertex, set]]) -> None:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
         self.neighbours = neighbours
 
 
 # Graph Class
-class Graph:
+class MovieGraph:
     """A weighted graph used to represent a movie network that keeps track of what trade each movie
     have in similar.
     There will be an edge between 2 movies if and only if there is at least 1 trade in common.
@@ -120,7 +120,7 @@ class Graph:
     #     - _vertices:
     #         A collection of the vertices contained in this graph.
     #         Maps item to _WeightedVertex object.
-    _vertices: dict[str, _Vertex]
+    _vertices: dict[str, _MovieVertex]
 
     def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
@@ -134,7 +134,7 @@ class Graph:
         Preconditions:
             - item not in self._vertices
         """
-        self._vertices[item.title] = _Vertex(item, set())
+        self._vertices[item.title] = _MovieVertex(item, set())
 
     def add_edge(self, item1: str, item2: str) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -164,8 +164,8 @@ class Graph:
         else:
             raise ValueError
 
-    def get_common_trade(self, item1: str, item2: str) -> set:
-        """Return the common trade between the 2 movies.
+    def get_common_trait(self, item1: str, item2: str) -> set:
+        """Return the common traits between the 2 movies.
 
         Return an empty set if item1 and item2 are not adjacent.
 
