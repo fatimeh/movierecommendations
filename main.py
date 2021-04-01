@@ -89,8 +89,8 @@ class _Vertex:
 
     Each vertex item is an instance of a Movie class.
 
-    The neighbours is a dictionary which maps the _Vertex object to the set of the traits
-    which this Vertex and its neighbour have in common.
+    The neighbours is a set of tuples where the first element of tuple is a vertex object and the second element 
+    is a set of the traits that the vertices have in common.
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
@@ -100,15 +100,14 @@ class _Vertex:
         - neighbours: The vertices that are adjacent to this vertex.
 
     Representation Invariants:
-        - self not in self.neighbours
-        - all(self in u.neighbours for u in self.neighbours)
+        - 
     
     """
 
     item: Movie
-    neighbours: Set[Tuple[Movie, set]]
+    neighbours: Set[Tuple[_Vertex, set]]
 
-    def __init__(self, item: Movie, neighbours: Set[Tuple[Movie, set]]) -> None:
+    def __init__(self, item: Movie, neighbours: Set[Tuple[_Vertex, set]]) -> None:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
         self.neighbours = neighbours
