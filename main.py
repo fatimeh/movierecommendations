@@ -13,7 +13,7 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Tuple, Dict, Set, Any
+from typing import Tuple, Set
 import pandas as pd
 
 
@@ -37,9 +37,9 @@ def load_datasets(movies_file: str) -> Graph:
     for index in movies.index:
         title = str(movies['title'][index])
         release_year = int(movies['year'][index])
-        genre = tuple(movies['genre'][index].split(','))
+        genre = set(movies['genre'][index].split(','))
         duration = int(movies['duration'][index])
-        country = tuple(str(movies['country'][index]).split(','))
+        country = set(str(movies['country'][index]).split(','))
         language = str(movies['language'][index])
         director = str(movies['director'][index])
         movie = Movie(title, release_year, genre, duration, country, language, director)
@@ -65,14 +65,14 @@ class Movie:
     """
     title: str
     release_year: int
-    genre: Tuple[str]
+    genre: Set[str]
     duration: int
-    country: Tuple[str]
+    country: Set[str]
     language: str
     director: str
 
-    def __init__(self, title: str, release_year: int, genre: Tuple[str], duration: int,
-                 country: Tuple[str], language: str, director: str):
+    def __init__(self, title: str, release_year: int, genre: Set[str], duration: int,
+                 country: Set[str], language: str, director: str):
         self.title = title
         self.release_year = release_year
         self.genre = genre
