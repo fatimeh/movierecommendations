@@ -99,9 +99,6 @@ class _Vertex:
         - item: The data stored in this vertex, representing a movie.
         - neighbours: The vertices that are adjacent to this vertex.
 
-    Representation Invariants:
-        - all
-    
     """
 
     item: Movie
