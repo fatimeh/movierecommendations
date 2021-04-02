@@ -33,7 +33,7 @@ def load_datasets(movies_file: str) -> MovieGraph:
 
     attributes = {'title', 'year', 'genre', 'duration', 'country', 'language', 'director'}
     movies = pd.read_csv(movies_file, usecols=lambda x: x in attributes)
-    # breakpoint()
+
     for index in movies.index:
         title = str(movies['title'][index])
         release_year = int(movies['year'][index])
@@ -44,6 +44,12 @@ def load_datasets(movies_file: str) -> MovieGraph:
         director = str(movies['director'][index])
         movie = Movie(title, release_year, genre, duration, country, language, director)
         movie_graph.add_vertex(movie)
+
+    # for index1 in movies.index:
+    #     for index2 in movies.index:
+    #         item1 = str(movies['title'][index1])
+    #         item2 = str(movies['title'][index2])
+    #         movie_graph.add_edge(item1, item2)
 
     return movie_graph
 
@@ -152,12 +158,17 @@ class MovieGraph:
                       v1.item.language == v2.item.language, v1.item.director == v2.item.director]
             if any(common):
                 name = ['release_year', 'genre', 'duration', 'country', 'language', 'director']
-                for i in range(0, 6):
-                    if not common[i]:
-                        name.remove(name[i])
+                # for i in range(0, 6):
+                #     if not common[i]:
+                #         name.remove(name[i])
 
-                v1.neighbours.add((v2, set(name)))
-                v2.neighbours.add((v1, set(name)))
+                set_so_far = set()
+                for i in range(0, 6):
+                    if common[i]:
+                        set_so_far.add(name[i])
+
+                v1.neighbours.add((v2, set_so_far))
+                v2.neighbours.add((v1, set_so_far))
                 return
             else:
                 return
