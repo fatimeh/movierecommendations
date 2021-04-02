@@ -108,12 +108,12 @@ class _MovieVertex:
     """
 
     item: Movie
-    neighbours: Set[Tuple[_MovieVertex, set]]
+    neighbours: dict[_MovieVertex, set]
 
-    def __init__(self, item: Movie, neighbours: Set[Tuple[_MovieVertex, set]]) -> None:
+    def __init__(self, item: Movie) -> None:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
-        self.neighbours = neighbours
+        self.neighbours = {}
 
 
 # Graph Class
@@ -140,7 +140,7 @@ class MovieGraph:
         Preconditions:
             - item not in self._vertices
         """
-        self._vertices[item.title] = _MovieVertex(item, set())
+        self._vertices[item.title] = _MovieVertex(item)
 
     def add_edge(self, item1: str, item2: str) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -158,17 +158,14 @@ class MovieGraph:
                       v1.item.language == v2.item.language, v1.item.director == v2.item.director]
             if any(common):
                 name = ['release_year', 'genre', 'duration', 'country', 'language', 'director']
-                # for i in range(0, 6):
-                #     if not common[i]:
-                #         name.remove(name[i])
 
                 set_so_far = set()
                 for i in range(0, 6):
                     if common[i]:
                         set_so_far.add(name[i])
 
-                v1.neighbours.add((v2, set_so_far))
-                v2.neighbours.add((v1, set_so_far))
+                v1.neighbours[v2] = set_so_far
+                v2.neighbours[v1] = set_so_far
                 return
             else:
                 return
