@@ -45,12 +45,6 @@ def load_datasets(movies_file: str) -> MovieGraph:
         movie = Movie(title, release_year, genre, duration, country, language, director)
         movie_graph.add_vertex(movie)
 
-    # for index1 in movies.index:
-    #     for index2 in movies.index:
-    #         item1 = str(movies['title'][index1])
-    #         item2 = str(movies['title'][index2])
-    #         movie_graph.add_edge(item1, item2)
-
     return movie_graph
 
 
@@ -166,9 +160,6 @@ class MovieGraph:
 
                 v1.neighbours[v2] = set_so_far
                 v2.neighbours[v1] = set_so_far
-                return
-            else:
-                return
         else:
             raise ValueError
 
@@ -184,8 +175,8 @@ class MovieGraph:
         v2 = self._vertices[item2]
         common = set()
         for vertex in v1.neighbours:
-            if vertex[0] == v2:
-                common = vertex[1]
+            if vertex == v2:
+                common = v1.neighbours[vertex]
 
         return common
 
@@ -194,9 +185,10 @@ class MovieGraph:
 
         Return False if item1 or item2 do not appear as vertices in this graph.
         """
+
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
-            return any(v2[0].item.title == item2 for v2 in v1.neighbours)
+            return any(v2.item.title == item2 for v2 in v1.neighbours)
         else:
             return False
 
@@ -210,6 +202,6 @@ class MovieGraph:
         """
         if item in self._vertices:
             v = self._vertices[item]
-            return {neighbour[0].item for neighbour in v.neighbours}
+            return {neighbour.item for neighbour in v.neighbours}
         else:
             raise ValueError
