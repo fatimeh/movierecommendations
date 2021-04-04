@@ -15,6 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Tuple, Set
 import pandas as pd
+import tkinter as tk
 
 
 # Reading .csv files
@@ -205,3 +206,5 @@ class MovieGraph:
             return {neighbour.item for neighbour in v.neighbours}
         else:
             raise ValueError
+            
+            
