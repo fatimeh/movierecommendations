@@ -213,3 +213,63 @@ class MovieGraph:
             return {neighbour.item.title for neighbour in v.neighbours}
         else:
             raise ValueError
+            
+def runner() -> list:
+    """"""
+    selected = []
+    window = tk.Tk()
+    listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
+    window.geometry("300x250")
+    label = tk.Label(window, text="Genres")
+    listbox.insert(1, "Horror")
+    listbox.insert(2, "Classic")
+    listbox.insert(3, "Adventure")
+    listbox.insert(4, "Biography")
+    listbox.insert(5, "Animation")
+
+    def submit() -> None:
+        """Submit command."""
+        selected.append(listbox.curselection())
+        window.destroy()
+
+    btn1 = tk.Button(window, text='Submit', command=submit)
+    btn1.pack(side='bottom')
+    listbox.pack()
+
+    window.mainloop()
+    return selected
+
+def runner2() -> list:
+    selected = []
+    window = tk.Tk()
+    listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
+    window.geometry("300x250")
+    label = tk.Label(window, text="Genres")
+    listbox.insert(1, "Horror")
+    listbox.insert(2, "Classic")
+    listbox.insert(3, "Adventure")
+    listbox.insert(4, "Biography")
+    listbox.insert(5, "Animation")
+
+    def submit() -> None:
+        """Submit command."""
+        selected.append(listbox.curselection()[0])
+        listbox.delete(listbox.curselection()[0])
+
+    def finish() -> None:
+        window.destroy()
+
+    btn1 = tk.Button(window, text='Submit', command=submit)
+    btn2 = tk.Button(window, text='QUIT', command=finish)
+    btn1.pack(side='bottom')
+    btn2.pack()
+    listbox.pack()
+    window.mainloop()
+    return selected
+
+
+def runner3() -> tuple:
+    a = runner()
+    b = runner2()
+    return (a, b)
+
