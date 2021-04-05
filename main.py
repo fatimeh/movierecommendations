@@ -13,13 +13,13 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Tuple, Set
+from typing import Set
 import pandas as pd
 import tkinter as tk
 
 
 # Reading .csv files
-def load_datasets(movies_file: str) -> MovieGraph:
+def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     """
     Return a Movie object based on the details regarding movies in the given datasets.
 
@@ -34,6 +34,7 @@ def load_datasets(movies_file: str) -> MovieGraph:
 
     attributes = {'title', 'year', 'genre', 'duration', 'country', 'language', 'director'}
     movies = pd.read_csv(movies_file, usecols=lambda x: x in attributes)
+    movie_graph.add_vertex(user_movie)
 
     for index in movies.index:
         title = str(movies['title'][index])
@@ -41,10 +42,11 @@ def load_datasets(movies_file: str) -> MovieGraph:
         genre = set(movies['genre'][index].split(','))
         duration = int(movies['duration'][index])
         country = set(str(movies['country'][index]).split(','))
-        language = str(movies['language'][index])
+        language = set(str(movies['language'][index]).split(','))
         director = str(movies['director'][index])
         movie = Movie(title, release_year, genre, duration, country, language, director)
         movie_graph.add_vertex(movie)
+        movie_graph.add_edge(user_movie.title, title)
 
     return movie_graph
 
@@ -67,13 +69,13 @@ class Movie:
     title: str
     release_year: int
     genre: Set[str]
+    language: Set[str]
     duration: int
     country: Set[str]
-    language: str
     director: str
 
     def __init__(self, title: str, release_year: int, genre: Set[str], duration: int,
-                 country: Set[str], language: str, director: str):
+                 country: Set[str], language: Set[str], director: str):
         self.title = title
         self.release_year = release_year
         self.genre = genre
@@ -95,6 +97,8 @@ class _MovieVertex:
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
+
+    User vertex:
 
     Instance Attributes:
         - item: The data stored in this vertex, representing a movie.
@@ -148,9 +152,12 @@ class MovieGraph:
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
             v2 = self._vertices[item2]
-            common = [v1.item.release_year == v2.item.release_year, v1.item.genre == v2.item.genre,
-                      v1.item.duration == v2.item.duration, v1.item.country == v2.item.country,
-                      v1.item.language == v2.item.language, v1.item.director == v2.item.director]
+            common = [v1.item.release_year == v2.item.release_year,
+                      any(g1 == g2 for g1 in v1.item.genre for g2 in v2.item.genre),
+                      v1.item.duration == v2.item.duration,
+                      any(c1 == c2 for c1 in v1.item.country for c2 in v2.item.country),
+                      any(l1 == l2 for l1 in v1.item.language for l2 in v2.item.language),
+                      v1.item.director == v2.item.director]
             if any(common):
                 name = ['release_year', 'genre', 'duration', 'country', 'language', 'director']
 
@@ -203,8 +210,6 @@ class MovieGraph:
         """
         if item in self._vertices:
             v = self._vertices[item]
-            return {neighbour.item for neighbour in v.neighbours}
+            return {neighbour.item.title for neighbour in v.neighbours}
         else:
             raise ValueError
-            
-            
