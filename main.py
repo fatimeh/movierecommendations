@@ -225,11 +225,8 @@ class MovieGraph:
             for x in range(0, 4)})
 
         """
-        movie = self._vertices[movie]
-        user = self._vertices[user]
-
         final_score = 0
-        common_traits = self.get_common_trait(movie.item.title, user.item.title)
+        common_traits = self.get_common_trait(movie, user)
 
         totals = {0: 10, 1: 5, 2: 3, 3: 1}
 
