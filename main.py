@@ -242,6 +242,25 @@ class MovieGraph:
 
         return final_score
 
+    def recommend_movies(self, user: str, preferences: List[str]) -> List[str]:
+        """Return a list of recommended movies in order of highest similarity score to lowest,
+        given a user vertex and a list of user preferences."""
+        movies = {}
+        final_movies = []
+
+        for neighbour in self._vertices[user].neighbours:
+            title = neighbour.item.title
+            score = self.similarity_score(user, title, preferences)
+            if score >= 10:
+                movies[title] = score
+
+        sorted_movies = sorted(movies.items(), key=lambda x: x[1], reverse=True)
+
+        for movie in sorted_movies:
+            final_movies.append(movie[0])
+
+        return final_movies
+
 
 def runner() -> list:
     """"""
