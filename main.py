@@ -13,7 +13,7 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Set
+from typing import Set, List
 import pandas as pd
 import tkinter as tk
 
@@ -244,6 +244,7 @@ class MovieGraph:
                 final_score += totals[i]
 
         return final_score
+
 
 def runner() -> list:
     """"""
