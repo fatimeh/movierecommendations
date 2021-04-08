@@ -213,7 +213,38 @@ class MovieGraph:
             return {neighbour.item.title for neighbour in v.neighbours}
         else:
             raise ValueError
-            
+
+    def similarity_score(self, movie: str, user: str, preferences: List[str]) \
+            -> int:
+        """Calculate the similarity score between a movie vertex and a user vertex, given
+        the order of the user's preferences.
+
+        Preconditions:
+            - len(preferences) == 4
+            - all({preferences[x] in {'genre', 'release_year', 'language', 'duration'}
+            for x in range(0, 4)})
+
+        """
+        movie = self._vertices[movie]
+        user = self._vertices[user]
+
+        final_score = 0
+        common_traits = self.get_common_trait(movie.item.title, user.item.title)
+
+        totals = {0: 10, 1: 5, 2: 3, 3: 1}
+
+        for i in range(0, 4):
+            if preferences[i] == 'genre' and 'genre' in common_traits:
+                final_score += totals[i]
+            elif preferences[i] == 'release_year' and 'release_year' in common_traits:
+                final_score += totals[i]
+            elif preferences[i] == 'language' and 'language' in common_traits:
+                final_score += totals[i]
+            elif preferences[i] == 'duration' and 'duration' in common_traits:
+                final_score += totals[i]
+
+        return final_score
+
 def runner() -> list:
     """"""
     selected = []
