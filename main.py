@@ -13,7 +13,7 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Set, List
+from typing import Set, List, Any
 import pandas as pd
 import tkinter as tk
 
@@ -316,8 +316,34 @@ def runner2() -> list:
     return selected
 
 
+def runner4() -> Any:
+    """spinbox"""
+    ans = []
+    window = tk.Tk()
+    window.geometry("300x250")
+
+    def submit() -> None:
+        """Submit command."""
+        ans.append(spinbox.get())
+        window.destroy()
+
+    option = ("Horror", "Classic")
+    # spinbox = tk.Spinbox(window, from_=0, to=10, increment=2, font=('Helvetica', 20))
+    spinbox = tk.Spinbox(window, values=option, font=('Helvetica', 20))
+    spinbox.pack()
+
+    label = tk.Label(window, text="Select")
+    label.pack()
+
+    btn1 = tk.Button(window, text='Submit', command=submit)
+    btn1.pack(side='bottom')
+
+    tk.Button(window, text="Quit", command=window.destroy).pack()
+    window.mainloop()
+    return ans[0]
+
+
 def runner3() -> tuple:
     a = runner()
     b = runner2()
     return (a, b)
-
