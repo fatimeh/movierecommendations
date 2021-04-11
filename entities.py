@@ -133,7 +133,7 @@ class MovieGraph:
     # Private Instance Attributes:
     #     - _vertices:
     #         A collection of the vertices contained in this graph.
-    #         Maps movie title to _MovieVertex object.
+    #         Maps movie id to _MovieVertex object.
     _vertices: dict[str, _MovieVertex]
 
     def __init__(self) -> None:
@@ -279,14 +279,14 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    # import python_ta.contracts
-    # python_ta.contracts.DEBUG_CONTRACTS = False
-    # python_ta.contracts.check_all_contracts()
-    #
-    # import python_ta
-    #
-    # python_ta.check_all(config={
-    #     'max-line-length': 100,
-    #     'extra-imports': ['dataclasses', 'typing', 'pandas'],
-    #     'allowed-io': []
-    # })
+    import python_ta.contracts
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()
+
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'extra-imports': ['dataclasses', 'typing', 'pandas'],
+        'allowed-io': []
+    })
