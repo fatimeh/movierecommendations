@@ -18,10 +18,8 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Set, List, Any
-import pandas as pd
-import tkinter as tk
+from entities import Movie, _MovieVertex, MovieGraph
+from visualization import main_runner
 
 # Main runner function
 GENRES = ['Western', 'Family', 'Adventure', 'War', 'Fantasy', 'History', 'Music', 'Documentary',
