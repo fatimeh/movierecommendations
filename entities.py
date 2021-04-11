@@ -269,3 +269,20 @@ class MovieGraph:
             final_movies.append(movie[0])
 
         return final_movies
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    import python_ta.contracts
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()
+
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'extra-imports': ['dataclasses', 'typing', 'pandas'],
+        'allowed-io': []
+    })

@@ -67,3 +67,20 @@ LANGUAGES = ['Quechua', 'Gujarati', 'Kabyle', 'Mari', 'Filipino', 'Mongolian', '
              'Athapascan languages', 'Macedonian', 'Syriac', 'Assyrian Neo-Aramaic', 'Telugu',
              'Tzotzil', 'Bulgarian', 'Turkmen', 'Middle English', 'Shanxi', 'Aymara', 'Ungwatsi',
              'Saami']
+
+if __name__ == '__main__':
+
+    import doctest
+    doctest.testmod()
+
+    import python_ta.contracts
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()
+
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'extra-imports': ['entities', 'visualization'],
+        'allowed-io': []
+    })
