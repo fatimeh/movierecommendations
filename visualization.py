@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from typing import Any, Dict
+from typing import Any, Dict, List
 import tkinter as tk
 
 DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -29,6 +29,7 @@ GENRES = ['Western', 'Family', 'Adventure', 'War', 'Fantasy', 'History', 'Music'
           'Thriller']
 LANGUAGES = ['Quechua', 'Gujarati', 'Kabyle', 'Mari', 'Filipino', 'Mongolian', 'Aramaic', 'Songhay',
              'Afrikaans', 'English', 'Crimean Tatar', 'Sicilian', 'American Sign Language']
+
 
 def runner_questions() -> Dict:
     """
@@ -109,8 +110,16 @@ def runner_rankings() -> list:
     selected = []
     selected = []
     window = tk.Tk()
+    window.geometry("800x800")
+    tk.Label(window, text="Ranking").pack()
+    tk.Label(window, text="Please think about the following 4 attributes "
+                          "and see which one you cares the most").pack()
+    tk.Label(window, text="Select the one that is the most important and click submit").pack()
+    tk.Label(window, text="Then select the one that is the second most important and click "
+                          "submit").pack()
+    tk.Label(window, text="Repeatedly select and click submit in order of importance"
+                          " until you select all four").pack()
     listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
-    window.geometry("300x300")
     listbox.insert(1, 'genre')
     listbox.insert(2, 'release_year')
     listbox.insert(3, 'language')
@@ -131,6 +140,17 @@ def runner_rankings() -> list:
     return selected
 
 
+def display_recommended_movies(recommended_movies: List) -> None:
+    """Display the recommended movies"""
+    window = tk.Tk()
+    window.geometry("500x500")
+
+    tk.Label(window, text="The 10 recommended movies are listed below").pack()
+
+    for i in range(0, 10):
+        tk.Label(window, text=recommended_movies[i]).pack()
+
+    window.mainloop()
 
 
 if __name__ == '__main__':
