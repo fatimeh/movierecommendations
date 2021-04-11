@@ -272,7 +272,7 @@ class MovieGraph:
         for movie in sorted_movies:
             final_movies.append(movie[0])
 
-        return final_movies
+        return final_movies[:10]
 
 
 if __name__ == '__main__':
