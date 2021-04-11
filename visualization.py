@@ -37,10 +37,34 @@ def runner_questions() -> Dict:
     """
     options = {}
     window = tk.Tk()
+    window.geometry("600x600")
+    create_listbox1(window, options)
+    create_listbox2(window, options)
+    create_listbox3(window, options)
+    create_listbox4(window, options)
+
+    window.mainloop()
+    return options
+
+
+
+
+def create_decade_options() -> tuple:
+    """Return a tuple of decades."""
+    decades = []
+    decades_tuple = []
+    for i in range(1960, 2020, 10):
+        decades.append(f'{i}' + '-' + f'{i + 10}')
+        decades_tuple.append((i, i + 10))
+
+    return (decades, decades_tuple)
+
+
+def create_listbox1(window: tk.Tk, options: dict) -> None:
+    """Create listbox"""
     frame1 = tk.LabelFrame(window, text="What genre do you prefer?", padx=15, pady=15)
     frame1.grid(row=0, column=0)
     listbox1 = tk.Listbox(frame1, height=5, selectmode='SINGLE')
-    window.geometry("600x600")
     for i in range(len(GENRES)):
         listbox1.insert(i + 1, GENRES[i])
 
@@ -53,6 +77,9 @@ def runner_questions() -> Dict:
     btn1.pack(side='bottom')
     listbox1.pack()
 
+
+def create_listbox2(window: tk.Tk, options: dict) -> None:
+    """Create listbox2."""
     frame2 = tk.LabelFrame(window, text="What duration do you want?", padx=15, pady=15)
     frame2.grid(row=0, column=1)
     listbox2 = tk.Listbox(frame2, height=5, selectmode='SINGLE')
@@ -69,6 +96,9 @@ def runner_questions() -> Dict:
     btn2.pack(side='bottom')
     listbox2.pack()
 
+
+def create_listbox3(window: tk.Tk, options: dict) -> None:
+    """Create listbox2."""
     frame3 = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
     frame3.grid(row=1, column=0)
     decades = create_decade_options()[0]
@@ -86,6 +116,9 @@ def runner_questions() -> Dict:
     btn3.pack(side='bottom')
     listbox3.pack()
 
+
+def create_listbox4(window: tk.Tk, options: dict) -> None:
+    """Create listbox4."""
     frame4 = tk.LabelFrame(window, text="Which language do you want?", padx=15, pady=15)
     frame4.grid(row=1, column=1)
     listbox4 = tk.Listbox(frame4, height=5, selectmode='SINGLE')
@@ -101,13 +134,9 @@ def runner_questions() -> Dict:
     btn4.pack(side='bottom')
     listbox4.pack()
 
-    window.mainloop()
-    return options
-
 
 def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses."""
-    selected = []
     selected = []
     window = tk.Tk()
     window.geometry("800x800")
