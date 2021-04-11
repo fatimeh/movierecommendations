@@ -47,8 +47,6 @@ def runner_questions() -> Dict:
     return options
 
 
-
-
 def create_decade_options() -> tuple:
     """Return a tuple of decades."""
     decades = []
