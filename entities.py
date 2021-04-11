@@ -83,8 +83,8 @@ class Movie:
     language: Set[str]
     rating: float
 
-    def __init__(self, movie_id: str, title: str, release_year: Set[int], genre: Set[str], duration: Set[int],
-                 language: Set[str], rating: float):
+    def __init__(self, movie_id: str, title: str, release_year: Set[int], genre: Set[str],
+                 duration: Set[int], language: Set[str], rating: float) -> None:
         self.movie_id = movie_id
         self.title = title
         self.release_year = release_year
@@ -160,21 +160,20 @@ class MovieGraph:
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
             v2 = self._vertices[item2]
-            common = [
-                any(g1 == g2 for g1 in v1.item.release_year for g2 in v2.item.release_year),
-                any(g1 == g2 for g1 in v1.item.genre for g2 in v2.item.genre),
-                any(g1 == g2 for g1 in v1.item.duration for g2 in v2.item.duration),
-                any(l1 == l2 for l1 in v1.item.language for l2 in v2.item.language)]
-            if any(common):
-                name = ['release_year', 'genre', 'duration', 'language']
+            common = [any(g1 == g2 for g1 in v1.item.release_year for g2 in v2.item.release_year),
+                      any(g1 == g2 for g1 in v1.item.genre for g2 in v2.item.genre),
+                      any(g1 == g2 for g1 in v1.item.duration for g2 in v2.item.duration),
+                      any(l1 == l2 for l1 in v1.item.language for l2 in v2.item.language)]
 
-                set_so_far = set()
-                for i in range(len(common)):
-                    if common[i]:
-                        set_so_far.add(name[i])
+            name = ['release_year', 'genre', 'duration', 'language']
 
-                v1.neighbours[v2] = set_so_far
-                v2.neighbours[v1] = set_so_far
+            set_so_far = set()
+            for i in range(len(common)):
+                if common[i]:
+                    set_so_far.add(name[i])
+
+            v1.neighbours[v2] = set_so_far
+            v2.neighbours[v1] = set_so_far
         else:
             raise ValueError
 
@@ -279,14 +278,14 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    import python_ta.contracts
-    python_ta.contracts.DEBUG_CONTRACTS = False
-    python_ta.contracts.check_all_contracts()
-
-    import python_ta
-
-    python_ta.check_all(config={
-        'max-line-length': 100,
-        'extra-imports': ['dataclasses', 'typing', 'pandas'],
-        'allowed-io': []
-    })
+    # import python_ta.contracts
+    # python_ta.contracts.DEBUG_CONTRACTS = False
+    # python_ta.contracts.check_all_contracts()
+    #
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'max-line-length': 100,
+    #     'extra-imports': ['dataclasses', 'typing', 'pandas'],
+    #     'allowed-io': []
+    # })
