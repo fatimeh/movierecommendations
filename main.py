@@ -17,34 +17,37 @@ from typing import Set, List, Any
 import pandas as pd
 import tkinter as tk
 
+RATING_BENCHMARK = 8.0
+
 
 # Reading .csv files
 def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     """
-    Return a Movie object based on the details regarding movies in the given datasets.
+    Return a MovieGraph based on the details regarding movies in the given datasets.
 
-    The Movie object class has multiple attributes that give information regarding the movies
-    and information regarding this attributes will be derived from the two input datasets.
+    The user_movie is a Movie object that represents the user preferences for a movie, which
+    will be added as a vertex in the MovieGraph.
+
+    Each vertex added in the MovieGraph will represent a movie and each edge added will
+    represent the common traits between the user_movie and all of the other vertices.
 
     Preconditions:
         - movies_file is the path to a CSV file corresponding to the IMDb movies data.
-        - ratings_file is the path to a CSV file corresponding to the IMDb movie ratings data.
     """
     movie_graph = MovieGraph()
 
-    attributes = {'title', 'year', 'genre', 'duration', 'country', 'language', 'director'}
+    attributes = {'imdb_title_id', 'title', 'year', 'genre', 'duration', 'language', 'avg_vote'}
     movies = pd.read_csv(movies_file, usecols=lambda x: x in attributes)
     movie_graph.add_vertex(user_movie)
 
     for index in movies.index:
         title = str(movies['title'][index])
-        release_year = int(movies['year'][index])
+        release_year = {int(movies['year'][index])}
         genre = set(movies['genre'][index].split(','))
-        duration = int(movies['duration'][index])
-        country = set(str(movies['country'][index]).split(','))
+        duration = {int(movies['duration'][index])}
         language = set(str(movies['language'][index]).split(','))
-        director = str(movies['director'][index])
-        movie = Movie(title, release_year, genre, duration, country, language, director)
+        rating = float(movies['avg_vote'][index])
+        movie = Movie(title, release_year, genre, duration, language, rating)
         movie_graph.add_vertex(movie)
         movie_graph.add_edge(user_movie.title, title)
 
@@ -62,27 +65,24 @@ class Movie:
         - release_year: the year the movie was released
         - genre: the genre(s) of the movie
         - duration: the length of the movie (in minutes)
-        - country: the name of the country/countries the movie was originally released in
         - language: the language the movie was written in
-        - director: the name of the person that directed the movie
+        - rating: the total average weighted rating the movie received
     """
     title: str
-    release_year: int
+    release_year: Set[int]
     genre: Set[str]
+    duration: Set[int]
     language: Set[str]
-    duration: int
-    country: Set[str]
-    director: str
+    rating: float
 
-    def __init__(self, title: str, release_year: int, genre: Set[str], duration: int,
-                 country: Set[str], language: Set[str], director: str):
+    def __init__(self, title: str, release_year: Set[int], genre: Set[str], duration: Set[int],
+                 language: Set[str], rating: float):
         self.title = title
         self.release_year = release_year
         self.genre = genre
         self.duration = duration
-        self.country = country
         self.language = language
-        self.director = director
+        self.rating = rating
 
 
 # Vertex Class
@@ -92,16 +92,14 @@ class _MovieVertex:
 
     Each vertex item is an instance of a Movie class.
 
-    The neighbours is a set of tuples where the first element of tuple is a vertex object and
-    the second element is a set of the traits that the vertex and its neighbour have in common.
+    The neighbours is a dictionary where the key is a _MovieVertex object and the value is
+    a set of the traits that the vertex and its neighbours have in common.
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
 
-    User vertex:
-
     Instance Attributes:
-        - item: The data stored in this vertex, representing a movie.
+        - item: The data stored in this vertex, representing a Movie object.
         - neighbours: The vertices that are adjacent to this vertex.
 
     """
@@ -117,14 +115,15 @@ class _MovieVertex:
 
 # Graph Class
 class MovieGraph:
-    """A weighted graph used to represent a movie network that keeps track of what trade each movie
-    have in similar.
+    """A weighted graph used to represent a movie network that keeps track of the common traits
+    between movies.
+
     There will be an edge between 2 movies if and only if there is at least 1 trade in common.
     """
     # Private Instance Attributes:
     #     - _vertices:
     #         A collection of the vertices contained in this graph.
-    #         Maps item to _WeightedVertex object.
+    #         Maps movie title to _MovieVertex object.
     _vertices: dict[str, _MovieVertex]
 
     def __init__(self) -> None:
@@ -152,17 +151,16 @@ class MovieGraph:
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
             v2 = self._vertices[item2]
-            common = [v1.item.release_year == v2.item.release_year,
-                      any(g1 == g2 for g1 in v1.item.genre for g2 in v2.item.genre),
-                      v1.item.duration == v2.item.duration,
-                      any(c1 == c2 for c1 in v1.item.country for c2 in v2.item.country),
-                      any(l1 == l2 for l1 in v1.item.language for l2 in v2.item.language),
-                      v1.item.director == v2.item.director]
+            common = [
+                any(g1 == g2 for g1 in v1.item.release_year for g2 in v2.item.release_year),
+                any(g1 == g2 for g1 in v1.item.genre for g2 in v2.item.genre),
+                any(g1 == g2 for g1 in v1.item.duration for g2 in v2.item.duration),
+                any(l1 == l2 for l1 in v1.item.language for l2 in v2.item.language)]
             if any(common):
-                name = ['release_year', 'genre', 'duration', 'country', 'language', 'director']
+                name = ['release_year', 'genre', 'duration', 'language']
 
                 set_so_far = set()
-                for i in range(0, 6):
+                for i in range(len(common)):
                     if common[i]:
                         set_so_far.add(name[i])
 
@@ -172,7 +170,7 @@ class MovieGraph:
             raise ValueError
 
     def get_common_trait(self, item1: str, item2: str) -> set:
-        """Return the common traits between the 2 movies.
+        """Return a set of common traits between the given movies.
 
         Return an empty set if item1 and item2 are not adjacent.
 
@@ -203,7 +201,7 @@ class MovieGraph:
     def get_neighbours(self, item: str) -> set:
         """Return a set of the neighbours of the given item.
 
-        Note that the *items* which is the movie data type are returned, not the _Vertex objects
+        Note that the titles of the neighbour movies are returned, not the _Vertex objects
         themselves.
 
         Raise a ValueError if item does not appear as a vertex in this graph.
@@ -244,15 +242,20 @@ class MovieGraph:
 
     def recommend_movies(self, user: str, preferences: List[str]) -> List[str]:
         """Return a list of recommended movies in order of highest similarity score to lowest,
-        given a user vertex and a list of user preferences."""
+        given a user vertex and a list of user preferences.
+
+        In the case two movies have the same similarity score, the movies will be ranked in terms
+        of the IMDb rating they received.
+        """
         movies = {}
         final_movies = []
 
         for neighbour in self._vertices[user].neighbours:
-            title = neighbour.item.title
-            score = self.similarity_score(user, title, preferences)
-            if score >= 10:
-                movies[title] = score
+            if neighbour.item.rating >= RATING_BENCHMARK:
+                title = neighbour.item.title
+                score = self.similarity_score(user, title, preferences)
+                if score >= 10:
+                    movies[title] = score + (neighbour.item.rating / 10)
 
         sorted_movies = sorted(movies.items(), key=lambda x: x[1], reverse=True)
 
@@ -286,6 +289,7 @@ def runner() -> list:
 
     window.mainloop()
     return selected
+
 
 def runner2() -> list:
     selected = []
