@@ -49,9 +49,9 @@ def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     for index in movies.index:
         title = str(movies['title'][index])
         release_year = {int(movies['year'][index])}
-        genre = set(movies['genre'][index].split(','))
+        genre = set(movies['genre'][index].split(', '))
         duration = {int(movies['duration'][index])}
-        language = set(str(movies['language'][index]).split(','))
+        language = set(str(movies['language'][index]).split(', '))
         rating = float(movies['avg_vote'][index])
         movie = Movie(title, release_year, genre, duration, language, rating)
         movie_graph.add_vertex(movie)
