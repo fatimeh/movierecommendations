@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from typing import Any
+from typing import Any, Dict
 import tkinter as tk
 
 
