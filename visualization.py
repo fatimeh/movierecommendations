@@ -47,11 +47,11 @@ def runner_questions() -> Dict:
     return options
 
 
-def create_decade_options() -> tuple:
+def create_decade_options(start_year: int, end_year: int) -> tuple:
     """Return a tuple of decades."""
     decades = []
     decades_tuple = []
-    for i in range(1960, 2020, 10):
+    for i in range(start_year, end_year, 10):
         decades.append(f'{i}' + '-' + f'{i + 10}')
         decades_tuple.append((i, i + 10))
 
@@ -99,8 +99,8 @@ def create_listbox3(window: tk.Tk, options: dict) -> None:
     """Create listbox2."""
     frame3 = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
     frame3.grid(row=1, column=0)
-    decades = create_decade_options()[0]
-    decades_tuples = create_decade_options()[1]
+    decades = create_decade_options(1960, 2020)[0]
+    decades_tuples = create_decade_options(1960, 2020)[1]
     listbox3 = tk.Listbox(frame3, height=len(decades), selectmode='SINGLE')
     for i in range(1, len(decades) + 1):
         listbox3.insert(i, decades[i - 1])
