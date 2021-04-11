@@ -108,7 +108,6 @@ def runner_questions() -> Dict:
 def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses."""
     selected = []
-    selected = []
     window = tk.Tk()
     window.geometry("800x800")
     tk.Label(window, text="Ranking").pack()
