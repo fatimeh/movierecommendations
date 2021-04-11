@@ -21,7 +21,18 @@ from __future__ import annotations
 from entities import Movie, _MovieVertex, MovieGraph
 from visualization import main_runner
 
-# Main runner function
+
+def main() -> None:
+    """"
+    The main function that will recommend movies to the user based on their preferences.
+    """
+    # Call the user interface functions to get the user input
+    # Create user vertex based on input
+    # Create movie graph
+    # Call the recommendation function and get the list of movies
+    # Display the recommended movies
+
+
 GENRES = ['Western', 'Family', 'Adventure', 'War', 'Fantasy', 'History', 'Music', 'Documentary',
           'Reality-TV', 'Animation', 'Sport', 'Action', 'Mystery', 'Crime', 'Drama', 'Horror',
           'Film-Noir', 'Musical', 'Comedy', 'Adult', 'Romance', 'Sci-Fi', 'Biography', 'News',
