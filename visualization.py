@@ -131,21 +131,24 @@ def runner_questions() -> Dict:
 
 def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses."""
+    option = ["Genre", "Duration", "Release Year", "Language"]
     selected = []
     window = tk.Tk()
     listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
     window.geometry("300x250")
     tk.Label(window, text="Ranking")
     listbox.insert(1, "Genre")
-    listbox.insert(2, "Year")
-    listbox.insert(3, "Duration")
-    listbox.insert(4, "Release Year")
-    listbox.insert(5, "Language")
+    listbox.insert(2, "Duration")
+    listbox.insert(3, "Release Year")
+    listbox.insert(4, "Language")
 
     def submit() -> None:
         """Collect user selection and delete the option from listbox."""
-        selected.append(listbox.curselection()[0])
+        selected.append(option[listbox.curselection()[0]])
+        option.remove(option[listbox.curselection()[0]])
         listbox.delete(listbox.curselection()[0])
+        if listbox.size() == 0:
+            window.destroy()
 
     def finish() -> None:
         """Close the window."""
