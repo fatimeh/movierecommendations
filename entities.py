@@ -68,6 +68,7 @@ class Movie:
     A data class representing a movie.
 
     Instance Attributes:
+        - movie_id: the IMDb title id of the movie
         - title: the title of the movie
         - release_year: the year the movie was released
         - genre: the genre(s) of the movie
