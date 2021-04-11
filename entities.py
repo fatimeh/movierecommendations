@@ -47,15 +47,16 @@ def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     movie_graph.add_vertex(user_movie)
 
     for index in movies.index:
+        movie_id = str(movies['imdb_title_id'][index])
         title = str(movies['title'][index])
         release_year = {int(movies['year'][index])}
         genre = set(movies['genre'][index].split(', '))
         duration = {int(movies['duration'][index])}
         language = set(str(movies['language'][index]).split(', '))
         rating = float(movies['avg_vote'][index])
-        movie = Movie(title, release_year, genre, duration, language, rating)
+        movie = Movie(movie_id, title, release_year, genre, duration, language, rating)
         movie_graph.add_vertex(movie)
-        movie_graph.add_edge(user_movie.title, title)
+        movie_graph.add_edge(user_movie.movie_id, movie_id)
 
     return movie_graph
 
@@ -74,6 +75,7 @@ class Movie:
         - language: the language the movie was written in
         - rating: the total average weighted rating the movie received
     """
+    movie_id: str
     title: str
     release_year: Set[int]
     genre: Set[str]
@@ -81,8 +83,9 @@ class Movie:
     language: Set[str]
     rating: float
 
-    def __init__(self, title: str, release_year: Set[int], genre: Set[str], duration: Set[int],
+    def __init__(self, movie_id: str, title: str, release_year: Set[int], genre: Set[str], duration: Set[int],
                  language: Set[str], rating: float):
+        self.movie_id = movie_id
         self.title = title
         self.release_year = release_year
         self.genre = genre
@@ -144,7 +147,7 @@ class MovieGraph:
         Preconditions:
             - item not in self._vertices
         """
-        self._vertices[item.title] = _MovieVertex(item)
+        self._vertices[item.movie_id] = _MovieVertex(item)
 
     def add_edge(self, item1: str, item2: str) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -200,7 +203,7 @@ class MovieGraph:
 
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
-            return any(v2.item.title == item2 for v2 in v1.neighbours)
+            return any(v2.item.movie_id == item2 for v2 in v1.neighbours)
         else:
             return False
 
@@ -258,8 +261,9 @@ class MovieGraph:
 
         for neighbour in self._vertices[user].neighbours:
             if neighbour.item.rating >= RATING_BENCHMARK:
+                movie_id = neighbour.item.movie_id
                 title = neighbour.item.title
-                score = self.similarity_score(user, title, preferences)
+                score = self.similarity_score(user, movie_id, preferences)
                 if score >= 10:
                     movies[title] = score + (neighbour.item.rating / 10)
 
