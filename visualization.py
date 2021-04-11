@@ -1,5 +1,11 @@
 """CSC111 Winter 2021 Final Project
 
+Overview and Description
+========================
+
+This Python module contains the functions for the user interface and
+visualization.
+
 Copyright and Usage Information
 ===============================
 

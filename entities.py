@@ -1,5 +1,12 @@
 """CSC111 Winter 2021 Final Project
 
+Overview and Description
+========================
+
+This Python module contains the dataclasses and the function to read the
+dataset. This includes the Movie class, the MovieGraph class, and the MovieVertex
+class.
+
 Copyright and Usage Information
 ===============================
 
