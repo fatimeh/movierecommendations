@@ -49,10 +49,11 @@ def runner_questions() -> Dict[str, Any]:
 
 
 def create_decade_options(start_year: int, end_year: int) -> tuple:
-    """Return a tuple of list where the first list contains all the range that we asked the user
-    to choose as texts and the second list contains the same range except that each item are a tuple
-    of integers where the first integer is the starting year and the second number
-    is the ending year."""
+    """Return a tuple of list where the first list contains all the decades between the
+    starting year and ending year that we asked the user to choose (1960 to 2020) as texts
+    and the second list contains the same decades except that each item are a tuple
+    of integers where the first integer is the starting year of that decade and
+    the second number is the ending year of that decade."""
     decades_string = []
     decades_tuple = []
     for i in range(start_year, end_year, 10):
