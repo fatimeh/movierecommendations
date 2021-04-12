@@ -176,6 +176,13 @@ def runner_rankings() -> list:
     return selected
 
 
+def main_runner() -> tuple:
+    """Main runner"""
+    rankings = runner_rankings()
+    questions = runner_questions()
+    return (rankings, questions)
+
+
 def display_recommended_movies(recommended_movies: List) -> None:
     """Display the recommended movies"""
     window = tk.Tk()
