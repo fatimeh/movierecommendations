@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from typing import Dict, List
+from typing import Dict, List, Any
 import tkinter as tk
 
 DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -33,7 +33,8 @@ LANGUAGES = ['Quechua', 'Gujarati', 'Kabyle', 'Mari', 'Filipino', 'Mongolian', '
 
 def runner_questions() -> Dict[str, Any]:
     """
-    Returns a dictionary where the keys are the options for rankings and the values are the user input.
+    Returns a dictionary where the keys are the options for rankings and the values are the
+    user input.
     """
     options = {}
     window = tk.Tk()
@@ -70,6 +71,8 @@ def create_genres_listbox(window: tk.Tk, options: dict) -> None:
         """Collect user input and destroy the frame."""
         options['genres'] = GENRES[genre_listbox.curselection()[0]]
         genre_frame.destroy()
+        if len(options) == 4:
+            window.destroy()
 
     button = tk.Button(genre_frame, text='Submit', command=submit)
     button.pack(side='bottom')
@@ -89,6 +92,8 @@ def create_duration_listbox(window: tk.Tk, options: dict) -> None:
         """Collect user input."""
         options['duration'] = DURATIONS[duration_listbox.curselection()[0]]
         duration_frame.destroy()
+        if len(options) == 4:
+            window.destroy()
 
     button = tk.Button(duration_frame, text='Submit', command=submit)
     button.pack(side='bottom')
@@ -109,6 +114,8 @@ def create_year_listbox(window: tk.Tk, options: dict) -> None:
         """Collect user input."""
         options['release_year'] = decades_tuples[year_listbox.curselection()[0]]
         year_listbox.destroy()
+        if len(options) == 4:
+            window.destroy()
 
     button = tk.Button(year_frame, text='Submit', command=submit)
     button.pack(side='bottom')
@@ -127,6 +134,8 @@ def create_language_listbox(window: tk.Tk, options: dict) -> None:
         """Collect user input."""
         options['language'] = LANGUAGES[language_listbox.curselection()[0]]
         language_frame.destroy()
+        if len(options) == 4:
+            window.destroy()
 
     button = tk.Button(language_frame, text='Submit', command=submit)
     button.pack(side='bottom')
