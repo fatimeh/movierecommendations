@@ -66,12 +66,12 @@ def create_genres_listbox(window: tk.Tk, options: dict) -> None:
     for i in range(len(GENRES)):
         genre_listbox.insert(i + 1, GENRES[i])
 
-    def submit1() -> None:
+    def submit() -> None:
         """Collect user input and destroy the frame."""
         options['genres'] = GENRES[genre_listbox.curselection()[0]]
         genre_frame.destroy()
 
-    button = tk.Button(genre_frame, text='Submit', command=submit1)
+    button = tk.Button(genre_frame, text='Submit', command=submit)
     button.pack(side='bottom')
     genre_listbox.pack()
 
@@ -85,12 +85,12 @@ def create_duration_listbox(window: tk.Tk, options: dict) -> None:
     duration_listbox.insert(2, "Medium (60-180 min)")
     duration_listbox.insert(3, "Long (>180 min)")
 
-    def submit2() -> None:
+    def submit() -> None:
         """Collect user input."""
         options['duration'] = DURATIONS[duration_listbox.curselection()[0]]
         duration_frame.destroy()
 
-    button = tk.Button(duration_frame, text='Submit', command=submit2)
+    button = tk.Button(duration_frame, text='Submit', command=submit)
     button.pack(side='bottom')
     duration_listbox.pack()
 
@@ -105,12 +105,12 @@ def create_year_listbox(window: tk.Tk, options: dict) -> None:
     for i in range(1, len(decades) + 1):
         year_listbox.insert(i, decades[i - 1])
 
-    def submit3() -> None:
+    def submit() -> None:
         """Collect user input."""
         options['release_year'] = decades_tuples[year_listbox.curselection()[0]]
         year_listbox.destroy()
 
-    button = tk.Button(year_frame, text='Submit', command=submit3)
+    button = tk.Button(year_frame, text='Submit', command=submit)
     button.pack(side='bottom')
     year_listbox.pack()
 
@@ -123,12 +123,12 @@ def create_language_listbox(window: tk.Tk, options: dict) -> None:
     for j in range(0, len(LANGUAGES)):
         language_listbox.insert(j + 1, LANGUAGES[j])
 
-    def submit4() -> None:
+    def submit() -> None:
         """Collect user input."""
         options['language'] = LANGUAGES[language_listbox.curselection()[0]]
         language_frame.destroy()
 
-    button = tk.Button(language_frame, text='Submit', command=submit4)
+    button = tk.Button(language_frame, text='Submit', command=submit)
     button.pack(side='bottom')
     language_listbox.pack()
 
