@@ -113,7 +113,7 @@ def create_year_listbox(window: tk.Tk, options: dict) -> None:
     def submit() -> None:
         """Collect user input."""
         options['release_year'] = decades_tuples[year_listbox.curselection()[0]]
-        year_listbox.destroy()
+        year_frame.destroy()
         if len(options) == 4:
             window.destroy()
 
