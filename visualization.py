@@ -31,9 +31,9 @@ LANGUAGES = ['Quechua', 'Gujarati', 'Kabyle', 'Mari', 'Filipino', 'Mongolian', '
              'Afrikaans', 'English', 'Crimean Tatar', 'Sicilian', 'American Sign Language']
 
 
-def runner_questions() -> Dict:
+def runner_questions() -> Dict[str, Any]:
     """
-    Returns the input that was chosen by the user.
+    Returns a dictionary where the keys are the options for rankings and the values are the user input.
     """
     options = {}
     window = tk.Tk()
@@ -48,7 +48,7 @@ def runner_questions() -> Dict:
 
 
 def create_decade_options(start_year: int, end_year: int) -> tuple:
-    """Return a tuple of decades."""
+    """Return a tuple."""
     decades = []
     decades_tuple = []
     for i in range(start_year, end_year, 10):
