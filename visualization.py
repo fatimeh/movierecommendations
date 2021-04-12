@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from typing import Dict, List
+from typing import Any, Dict, List
 import tkinter as tk
 
 DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -38,100 +38,102 @@ def runner_questions() -> Dict:
     options = {}
     window = tk.Tk()
     window.geometry("600x600")
-    create_listbox1(window, options)
-    create_listbox2(window, options)
-    create_listbox3(window, options)
-    create_listbox4(window, options)
+    create_genres_listbox(window, options)
+    create_duration_listbox(window, options)
+    create_year_listbox(window, options)   
+    create_language_listbox(window, options)
+    
 
     window.mainloop()
     return options
 
 
-def create_decade_options(start_year: int, end_year: int) -> tuple:
+
+
+def create_decade_options() -> tuple:
     """Return a tuple of decades."""
     decades = []
     decades_tuple = []
-    for i in range(start_year, end_year, 10):
+    for i in range(1960, 2020, 10):
         decades.append(f'{i}' + '-' + f'{i + 10}')
         decades_tuple.append((i, i + 10))
 
     return (decades, decades_tuple)
 
 
-def create_listbox1(window: tk.Tk, options: dict) -> None:
+def create_genres_listbox(window: tk.Tk, options: dict) -> None:
     """Create listbox"""
-    frame1 = tk.LabelFrame(window, text="What genre do you prefer?", padx=15, pady=15)
-    frame1.grid(row=0, column=0)
-    listbox1 = tk.Listbox(frame1, height=5, selectmode='SINGLE')
+    genre_frame = tk.LabelFrame(window, text="What genre do you prefer?", padx=15, pady=15)
+    genre_frame.grid(row=0, column=0)
+    genre_listbox = tk.Listbox(genre_frame, height=5, selectmode='SINGLE')
     for i in range(len(GENRES)):
-        listbox1.insert(i + 1, GENRES[i])
+        genre_listbox.insert(i + 1, GENRES[i])
 
     def submit1() -> None:
         """Collect user input and destroy the frame."""
-        options['genres'] = GENRES[listbox1.curselection()[0]]
-        frame1.destroy()
+        options['genres'] = GENRES[genre_listbox.curselection()[0]]
+        genre_frame.destroy()
 
-    btn1 = tk.Button(frame1, text='Submit', command=submit1)
-    btn1.pack(side='bottom')
-    listbox1.pack()
+    button = tk.Button(genre_frame, text='Submit', command=submit1)
+    button.pack(side='bottom')
+    genre_listbox.pack()
 
 
-def create_listbox2(window: tk.Tk, options: dict) -> None:
+def create_duration_listbox(window: tk.Tk, options: dict) -> None:
     """Create listbox2."""
-    frame2 = tk.LabelFrame(window, text="What duration do you want?", padx=15, pady=15)
-    frame2.grid(row=0, column=1)
-    listbox2 = tk.Listbox(frame2, height=5, selectmode='SINGLE')
-    listbox2.insert(1, "Short(<60 min)")
-    listbox2.insert(2, "Medium (60-180 min)")
-    listbox2.insert(3, "Long (>180 min)")
+    duration_frame = tk.LabelFrame(window, text="What duration do you want?", padx=15, pady=15)
+    duration_frame.grid(row=0, column=1)
+    duration_listbox = tk.Listbox(duration_frame, height=5, selectmode='SINGLE')
+    duration_listbox.insert(1, "Short(<60 min)")
+    duration_listbox.insert(2, "Medium (60-180 min)")
+    duration_listbox.insert(3, "Long (>180 min)")
 
     def submit2() -> None:
         """Collect user input."""
-        options['duration'] = DURATIONS[listbox2.curselection()[0]]
-        frame2.destroy()
+        options['duration'] = DURATIONS[duration_listbox.curselection()[0]]
+        duration_frame.destroy()
 
-    btn2 = tk.Button(frame2, text='Submit', command=submit2)
-    btn2.pack(side='bottom')
-    listbox2.pack()
+    button = tk.Button(duration_frame, text='Submit', command=submit2)
+    button.pack(side='bottom')
+    duration_listbox.pack()
 
 
-def create_listbox3(window: tk.Tk, options: dict) -> None:
+def create_year_listbox(window: tk.Tk, options: dict) -> None:
     """Create listbox2."""
-    frame3 = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
-    frame3.grid(row=1, column=0)
-    decades = create_decade_options(1960, 2020)[0]
-    decades_tuples = create_decade_options(1960, 2020)[1]
-    listbox3 = tk.Listbox(frame3, height=len(decades), selectmode='SINGLE')
+    year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
+    year_frame.grid(row=1, column=0)
+    decades = create_decade_options()[0]
+    decades_tuples = create_decade_options()[1]
+    year_listbox = tk.Listbox(year_frame, height=len(decades), selectmode='SINGLE')
     for i in range(1, len(decades) + 1):
-        listbox3.insert(i, decades[i - 1])
+        year_listbox.insert(i, decades[i - 1])
 
     def submit3() -> None:
         """Collect user input."""
-        options['release_year'] = decades_tuples[listbox3.curselection()[0]]
-        frame3.destroy()
+        options['release_year'] = decades_tuples[year_listbox.curselection()[0]]
+        year_listbox.destroy()
 
-    btn3 = tk.Button(frame3, text='Submit', command=submit3)
-    btn3.pack(side='bottom')
-    listbox3.pack()
+    button = tk.Button(year_frame, text='Submit', command=submit3)
+    button.pack(side='bottom')
+    year_listbox.pack()
 
 
-def create_listbox4(window: tk.Tk, options: dict) -> None:
+def create_language_listbox(window: tk.Tk, options: dict) -> None:
     """Create listbox4."""
-    frame4 = tk.LabelFrame(window, text="Which language do you want?", padx=15, pady=15)
-    frame4.grid(row=1, column=1)
-    listbox4 = tk.Listbox(frame4, height=5, selectmode='SINGLE')
+    language_frame = tk.LabelFrame(window, text="Which language do you want?", padx=15, pady=15)
+    language_frame.grid(row=1, column=1)
+    language_listbox = tk.Listbox(language_frame, height=5, selectmode='SINGLE')
     for j in range(0, len(LANGUAGES)):
-        listbox4.insert(j + 1, LANGUAGES[j])
+        language_listbox.insert(j + 1, LANGUAGES[j])
 
     def submit4() -> None:
         """Collect user input."""
-        options['language'] = LANGUAGES[listbox4.curselection()[0]]
-        frame4.destroy()
+        options['language'] = LANGUAGES[language_listbox.curselection()[0]]
+        language_frame.destroy()
 
-    btn4 = tk.Button(frame4, text='Submit', command=submit4)
-    btn4.pack(side='bottom')
-    listbox4.pack()
-
+    button = tk.Button(language_frame, text='Submit', command=submit4)
+    button.pack(side='bottom')
+    language_listbox.pack()
 
 def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses."""
