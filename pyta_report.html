@@ -533,7 +533,7 @@ footer {
     <body>
         <header>
             <h1 class="title">PyTA Error Report</h1>
-            <time>Sun. Apr. 11 2021, 07:52:19 PM</time>
+            <time>Sun. Apr. 11 2021, 08:07:57 PM</time>
         </header>
         <main>
             
@@ -569,12 +569,12 @@ footer {
 
                             <div class="info">
                                 <span class="error-link style-error-id">
-                                    <a href="http://www.cs.toronto.edu/~david/pyta/&#35;W0611" target="_blank">&#10064; W0611 (unused-import)</a>
+                                    <a href="http://www.cs.toronto.edu/~david/pyta/&#35;E9970" target="_blank">&#10064; E9970 (type-annotation-param)</a>
                                 </span>
                                 <span class="occurrences">
-                                1
+                                2
                                 
-                                 occurrence.
+                                 occurrences.
                                 
                                 </span>
                                 <span class="shown">
@@ -589,18 +589,37 @@ footer {
                                 
                                 <div class="message">
                                     <h4 class="message-name">
-                                        [Line 21] The import Any imported from typing is unused, and so can be removed.
+                                        [Line 50] Function parameter is missing type annotation
                                         <span class="slider">
                                             <button style="float: right; background: #458B00;"> Expand/Collapse </button>
                                         </span>
                                     </h4>
                                     <div class="collapsible">
                                       
-                                      <code>   <span class="grey line-num">19</span>  <span class="grey"><span class="pygments-s2">&quot;&quot;&quot;</span></span>
-   <span class="grey line-num">20</span>  <span class="grey"><span class="pygments-kn">from</span> <span class="pygments-nn">__future__</span> <span class="pygments-kn">import</span> <span class="pygments-n">annotations</span></span>
-   <span class="gbold line-num">21</span>  <span class="highlight-pyta"><span class="pygments-kn">from</span> <span class="pygments-nn">typing</span> <span class="pygments-kn">import</span> <span class="pygments-n">Any</span><span class="pygments-p">,</span> <span class="pygments-n">Dict</span><span class="pygments-p">,</span> <span class="pygments-n">List</span></span>
-   <span class="grey line-num">22</span>  <span class="grey"><span class="pygments-kn">import</span> <span class="pygments-nn">tkinter</span> <span class="pygments-k">as</span> <span class="pygments-nn">tk</span></span>
-   <span class="grey line-num">23</span>  <span class="grey"></span>
+                                      <code>   <span class="grey line-num">48</span>  <span class="grey"></span>
+   <span class="grey line-num">49</span>  <span class="grey"></span>
+   <span class="gbold line-num">50</span>  <span class="black"><span class="pygments-k">def</span> <span class="pygments-nf">create_decade_options</span><span class="pygments-p">(</span></span><span class="highlight-pyta"><span class="pygments-n">start_year</span></span><span class="black"><span class="pygments-p">,</span> <span class="pygments-n">end_year</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-nb">tuple</span><span class="pygments-p">:</span></span>
+   <span class="grey line-num">51</span>      <span class="grey"><span class="pygments-sd">&quot;&quot;&quot;Return a tuple of decades.&quot;&quot;&quot;</span></span>
+   <span class="grey line-num">52</span>      <span class="grey"><span class="pygments-n">decades</span> <span class="pygments-o">=</span> <span class="pygments-p">[]</span></span>
+</code>
+                                      
+                                    </div>
+                                </div>
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 50] Function parameter is missing type annotation
+                                        <span class="slider">
+                                            <button style="float: right; background: #458B00;"> Expand/Collapse </button>
+                                        </span>
+                                    </h4>
+                                    <div class="collapsible">
+                                      
+                                      <code>   <span class="grey line-num">48</span>  <span class="grey"></span>
+   <span class="grey line-num">49</span>  <span class="grey"></span>
+   <span class="gbold line-num">50</span>  <span class="black"><span class="pygments-k">def</span> <span class="pygments-nf">create_decade_options</span><span class="pygments-p">(</span><span class="pygments-n">start_year</span><span class="pygments-p">,</span> </span><span class="highlight-pyta"><span class="pygments-n">end_year</span></span><span class="black"><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-nb">tuple</span><span class="pygments-p">:</span></span>
+   <span class="grey line-num">51</span>      <span class="grey"><span class="pygments-sd">&quot;&quot;&quot;Return a tuple of decades.&quot;&quot;&quot;</span></span>
+   <span class="grey line-num">52</span>      <span class="grey"><span class="pygments-n">decades</span> <span class="pygments-o">=</span> <span class="pygments-p">[]</span></span>
 </code>
                                       
                                     </div>

@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from typing import Any, Dict, List
+from typing import Dict, List
 import tkinter as tk
 
 DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -40,21 +40,18 @@ def runner_questions() -> Dict:
     window.geometry("600x600")
     create_genres_listbox(window, options)
     create_duration_listbox(window, options)
-    create_year_listbox(window, options)   
+    create_year_listbox(window, options)
     create_language_listbox(window, options)
-    
 
     window.mainloop()
     return options
 
 
-
-
-def create_decade_options() -> tuple:
+def create_decade_options(start_year: int, end_year: int) -> tuple:
     """Return a tuple of decades."""
     decades = []
     decades_tuple = []
-    for i in range(1960, 2020, 10):
+    for i in range(start_year, end_year, 10):
         decades.append(f'{i}' + '-' + f'{i + 10}')
         decades_tuple.append((i, i + 10))
 
@@ -102,8 +99,8 @@ def create_year_listbox(window: tk.Tk, options: dict) -> None:
     """Create listbox2."""
     year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
     year_frame.grid(row=1, column=0)
-    decades = create_decade_options()[0]
-    decades_tuples = create_decade_options()[1]
+    decades = create_decade_options(1960, 2020)[0]
+    decades_tuples = create_decade_options(1960, 2020)[1]
     year_listbox = tk.Listbox(year_frame, height=len(decades), selectmode='SINGLE')
     for i in range(1, len(decades) + 1):
         year_listbox.insert(i, decades[i - 1])
@@ -134,6 +131,7 @@ def create_language_listbox(window: tk.Tk, options: dict) -> None:
     button = tk.Button(language_frame, text='Submit', command=submit4)
     button.pack(side='bottom')
     language_listbox.pack()
+
 
 def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses."""
