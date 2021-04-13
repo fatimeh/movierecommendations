@@ -238,7 +238,7 @@ def runner_rankings() -> list:
     ranking = ['Genre', 'Release Year', 'Language', 'Duration']
     user_ranking = []
     window = tk.Tk()
-    window.geometry("800x800")
+    window.geometry("800x600")
     tk.Label(window, text="Ranking").pack()
     tk.Label(window, text="Please take a look at the following 4 attributes "
                           "and rank them in order of importance to you.").pack()
@@ -261,7 +261,7 @@ def runner_rankings() -> list:
             window.destroy()
 
     submit_button = tk.Button(window, text='Submit', command=submit)
-    submit_button.pack(side='bottom')
+    submit_button.pack()
     ranking_listbox.pack()
     window.mainloop()
     return user_ranking
