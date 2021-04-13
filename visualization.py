@@ -107,9 +107,10 @@ def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List[str]) -
         - 0 <= len(user_answer) < 5
 
      """
-    genre_frame = tk.LabelFrame(window, text="What genre do you prefer?", padx=15, pady=15)
+    genre_frame = tk.LabelFrame(window, text="What genre do you prefer?", fg="black",
+                                padx=15, pady=15)
     genre_frame.grid(row=0, column=0)
-    genre_listbox = tk.Listbox(genre_frame, height=5, selectmode='SINGLE')
+    genre_listbox = tk.Listbox(genre_frame, fg="black", height=5, selectmode='SINGLE')
     for i in range(len(genres)):
         genre_listbox.insert(i + 1, genres[i])
 
@@ -121,7 +122,7 @@ def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List[str]) -
         if len(user_answer) == 4:
             window.destroy()
 
-    submit_button = tk.Button(genre_frame, text='Submit', command=submit)
+    submit_button = tk.Button(genre_frame, fg="black", text='Submit', command=submit)
     submit_button.pack(side='bottom')
     genre_listbox.pack()
 
@@ -140,9 +141,10 @@ def create_duration_listbox(window: tk.Tk, user_answer: dict, duration: List) ->
         - 0 <= len(user_answer) < 5
 
     """
-    duration_frame = tk.LabelFrame(window, text="What duration do you want?", padx=15, pady=15)
+    duration_frame = tk.LabelFrame(window, text="What duration do you want?", fg="black",
+                                   padx=15, pady=15)
     duration_frame.grid(row=0, column=1)
-    duration_listbox = tk.Listbox(duration_frame, height=5, selectmode='SINGLE')
+    duration_listbox = tk.Listbox(duration_frame, height=5, selectmode='SINGLE', fg="black")
     duration_listbox.insert(1, duration[0])
     duration_listbox.insert(2, duration[1])
     duration_listbox.insert(3, duration[2])
@@ -155,7 +157,7 @@ def create_duration_listbox(window: tk.Tk, user_answer: dict, duration: List) ->
         if len(user_answer) == 4:
             window.destroy()
 
-    submit_button = tk.Button(duration_frame, text='Submit', command=submit)
+    submit_button = tk.Button(duration_frame, text='Submit', fg="black", command=submit)
     submit_button.pack(side='bottom')
     duration_listbox.pack()
 
@@ -173,11 +175,12 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
         - 0 <= len(user_answer) < 5
 
     """
-    year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
+    year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", fg="black",
+                               padx=15, pady=15)
     year_frame.grid(row=1, column=0)
     decades_string = create_decade_options(1890, 2020)[0]
     decades_tuples = create_decade_options(1890, 2020)[1]
-    year_listbox = tk.Listbox(year_frame, height=10, selectmode='SINGLE')
+    year_listbox = tk.Listbox(year_frame, height=10, selectmode='SINGLE', fg="black")
     for i in range(1, len(decades_string) + 1):
         year_listbox.insert(i, decades_string[i - 1])
 
@@ -189,7 +192,7 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
         if len(user_answer) == 4:
             window.destroy()
 
-    submit_button = tk.Button(year_frame, text='Submit', command=submit)
+    submit_button = tk.Button(year_frame, text='Submit', fg="black", command=submit)
     submit_button.pack(side='bottom')
     year_listbox.pack()
 
@@ -208,9 +211,10 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
         - 0 <= len(user_answer) < 5
 
      """
-    language_frame = tk.LabelFrame(window, text="Which language do you want?", padx=15, pady=15)
+    language_frame = tk.LabelFrame(window, text="Which language do you want?", fg="black",
+                                   padx=15, pady=15)
     language_frame.grid(row=1, column=1)
-    language_listbox = tk.Listbox(language_frame, height=10, selectmode='SINGLE')
+    language_listbox = tk.Listbox(language_frame, height=10, selectmode='SINGLE', fg="black")
     for j in range(0, len(languages)):
         language_listbox.insert(j + 1, languages[j])
 
@@ -222,7 +226,7 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
         if len(user_answer) == 4:
             window.destroy()
 
-    submit_button = tk.Button(language_frame, text='Submit', command=submit)
+    submit_button = tk.Button(language_frame, text='Submit', command=submit, fg="black")
     submit_button.pack(side='bottom')
     language_listbox.pack()
 
@@ -239,15 +243,16 @@ def runner_rankings() -> list:
     user_ranking = []
     window = tk.Tk()
     window.geometry("800x600")
-    tk.Label(window, text="Ranking").pack()
+    tk.Label(window, text="Ranking", fg="black").pack()
     tk.Label(window, text="Please take a look at the following 4 attributes "
-                          "and rank them in order of importance to you.").pack()
-    tk.Label(window, text="First, select the most important attribute and click submit.").pack()
+                          "and rank them in order of importance to you.", fg="black").pack()
+    tk.Label(window, text="First, select the most important attribute and click submit.",
+             fg="black").pack()
     tk.Label(window, text="Then, select the next attribute in your rankings and click "
-                          "submit.").pack()
+                          "submit.", fg="black").pack()
     tk.Label(window, text="Repeatedly select and click submit in your chosen order of importance"
-                          " until you have submitted all four attributes.").pack()
-    ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
+                          " until you have submitted all four attributes.", fg="black").pack()
+    ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE', fg="black")
     ranking_listbox.insert(1, ranking[0])
     ranking_listbox.insert(2, ranking[1])
     ranking_listbox.insert(3, ranking[2])
@@ -260,7 +265,7 @@ def runner_rankings() -> list:
         if ranking_listbox.size() == 0:
             window.destroy()
 
-    submit_button = tk.Button(window, text='Submit', command=submit)
+    submit_button = tk.Button(window, text='Submit', command=submit, fg="black")
     submit_button.pack()
     ranking_listbox.pack()
     window.mainloop()
@@ -295,12 +300,14 @@ def display_recommended_movies(recommended_movies: List) -> None:
     i = len(recommended_movies)
 
     if recommended_movies == []:
-        tk.Label(window, text="We were unable to find movies that match your preferences.").pack()
+        tk.Label(window, text="We were unable to find movies that match your preferences.",
+                 fg="black").pack()
     else:
-        tk.Label(window, text='The ' + f'{i}' + ' recommended movies are listed below:').pack()
+        tk.Label(window, text='The ' + f'{i}' + ' recommended movies are listed below:',
+                 fg="black").pack()
 
-        for i in range(0, len(recommended_movies)):
-            tk.Label(window, text=recommended_movies[i]).pack()
+        for index in range(0, len(recommended_movies)):
+            tk.Label(window, text=recommended_movies[index], fg="black").pack()
 
     window.mainloop()
 
@@ -317,6 +324,6 @@ if __name__ == '__main__':
     #
     # python_ta.check_all(config={
     #     'max-line-length': 100,
-    #     'extra-imports': ['typing', 'tkinter'],
+    #     'extra-imports': ['typing', 'tkinter', 'pandas'],
     #     'allowed-io': []
     # })
