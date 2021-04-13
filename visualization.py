@@ -264,7 +264,7 @@ def runner_rankings() -> list:
     submit_button.pack(side='bottom')
     ranking_listbox.pack()
     window.mainloop()
-    return rank
+    return user_ranking
 
 
 def main_runner() -> Tuple[list, dict]:
