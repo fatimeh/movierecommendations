@@ -36,8 +36,8 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
     Returns a dictionary where the keys are the 4 attributes that we asked the user to choose
     and the values are the user inputs for the 4 questions that we asked.
 
-    The genres list contains all genres in our dataset and the languages list contains all
-    languages in our dataset
+    The genres list contains all genres in the dataset and the languages list contains all
+    languages in the dataset
     """
     answers_so_far = {}
     duration = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -53,11 +53,10 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
 
 
 def create_decade_options(start_year: int, end_year: int) -> tuple:
-    """Return a tuple of list where the first list contains all the decades between the
-    starting year and ending year that we asked the user to choose (starting year is 1960
-    to end year is 2020) as texts and the second list contains the same decades except
-    that each item are a tuple of integers where the first integer is the starting
-    year of that decade and the second number is the ending year of that decade.
+    """Return a tuple where the first element is a list containing the string representation of all the decades between the
+    starting year and ending yearand the second element is a list containing the same decades except 
+    that each item is a tuple of integers where the first integer is the starting year of that decade 
+    and the second number is the ending year of that decade.
 
     Preconditions:
         - start_year >= 0
@@ -72,15 +71,14 @@ def create_decade_options(start_year: int, end_year: int) -> tuple:
     return (decades_string, decades_tuple)
 
 
-def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List) -> None:
-    """Create the listbox that allows user to choose their genres preference
-     and a button to submit their input
+def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List[str]) -> None:
+    """Create the listbox that allows user to choose their favourite genres.
 
      This method will mutate the user_answer dictionary when the submit button is clicked
-     to add the user's answer to the current attribute
+     to add the user's answer to user_answer dictionary.
 
-     The user_answer dictionary is the collection that contains all answers that
-     the user give so far and the genres list contains all the genres in our dataset
+     The user_answer dictionary is a dictionary that contains all of the answers that
+     the user has given so far and the genres list contains all of the genres in the dataset.
 
      Preconditions:
         - 0 <= len(user_answer) < 5
@@ -93,7 +91,7 @@ def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List) -> Non
         genre_listbox.insert(i + 1, genres[i])
 
     def submit() -> None:
-        """Collect whatever user choose for their preference for genres and close the window if
+        """Collect the user's choice for the genres and close the window if
         user answers all the question on the window."""
         user_answer['genres'] = genres[genre_listbox.curselection()[0]]
         genre_frame.destroy()
@@ -106,15 +104,13 @@ def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List) -> Non
 
 
 def create_duration_listbox(window: tk.Tk, user_answer: dict, duration: List) -> None:
-    """Create the listbox that allows user to choose their movie duration preference
-        and a button to submit their input
+    """Create the listbox that allows user to choose their movie duration preference.
 
         This method will mutate the user_answer dictionary when the submit button is clicked
-        to add the user's answer to the current attribute
+        to add the user's answer to the user_answer dictionary.
 
-        The user_answer dictionary is the collection that contains all answers that
-        the user give so far and the duration list contains our way of dividing the
-        duration into range
+        The user_answer dictionary is the dictionary that contains all of the answers that
+        the user has given so far.
 
      Preconditions:
         - len(duration) == 3
@@ -129,7 +125,7 @@ def create_duration_listbox(window: tk.Tk, user_answer: dict, duration: List) ->
     duration_listbox.insert(3, duration[2])
 
     def submit() -> None:
-        """Collect whatever user choose for their preference for movie duration and close the
+        """Collect the user's choice for the movie duration and close the
         window if user answers all the question on the window."""
         user_answer['duration'] = duration[duration_listbox.curselection()[0]]
         duration_frame.destroy()
@@ -142,14 +138,13 @@ def create_duration_listbox(window: tk.Tk, user_answer: dict, duration: List) ->
 
 
 def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
-    """Create the listbox that allows user to choose their release year preference
-     and a button to submit their input
+    """Create the listbox that allows user to choose their release year preference.
 
      This method will mutate the user_answer dictionary when the submit button is clicked
-     to add the user's answer to the current attribute
+     to add the user's answer to user_answer dictionary.
 
-     The user_answer dictionary is the collection that contains all answers that
-     the user give so far
+     The user_answer dictionary is the dictionary that contains all of the answers that
+     the user has given so far.
 
      Preconditions:
         - 0 <= len(user_answer) < 5
@@ -164,7 +159,7 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
         year_listbox.insert(i, decades_string[i - 1])
 
     def submit() -> None:
-        """Collect whatever user choose for their preference for release year and close
+        """Collect the user's choice for release year and close
         the window if user answers all the question on the window."""
         user_answer['release_year'] = decades_tuples[year_listbox.curselection()[0]]
         year_frame.destroy()
@@ -177,14 +172,13 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
 
 
 def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -> None:
-    """Create the listbox that allows user to choose their language preference
-     and a button to submit their input.
+    """Create the listbox that allows user to choose their language preference.
 
      This method will mutate the user_answer dictionary when the submit button is clicked
-     to add the user's answer to the current attribute
+     to add the user's answer to the user_answer dictionary. 
 
-     The user_answer dictionary is the collection that contains all answers that
-     the user give so far and the language list is a list with all languages in our dataset
+     The user_answer dictionary is the dictionary that contains all of the answers that
+     the user has given so far and the language list is a list that has all languages in the dataset.
 
      Preconditions:
         - 0 <= len(user_answer) < 5
@@ -197,7 +191,7 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
         language_listbox.insert(j + 1, languages[j])
 
     def submit() -> None:
-        """Collect whatever user choose for their preference for language and close the window if
+        """Collect the user's choice for language and close the window if
         user answers all the question on the window."""
         user_answer['language'] = languages[language_listbox.curselection()[0]]
         language_frame.destroy()
@@ -211,10 +205,10 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
 
 def runner_rankings(ranking: List) -> list:
     """Return the a list of rankings that the user chooses.
-    The first item is the attributes that the user rank first which is the most important
-    The second item is the second most important attributes that the user rank and so on.
+    The first item is the attributes that the user ranks first which is the most important, and
+    the second item is the second most important attribute that the user ranks and so on.
 
-    The parameter ranking is a list with the 4 attributes that we ask users to rank
+    The ranking parameter is a list with the 4 attributes that the users will rank.
 
     Preconditions:
         - len(ranking) == 4
@@ -252,10 +246,10 @@ def runner_rankings(ranking: List) -> list:
     return rank
 
 
-def main_runner() -> tuple:
+def main_runner() -> Tuple[list, dict]:
     """Display the ranking and the questions window to get the user input and return
-    the output of the 2 methods as a tuple where the first is the ranking output and
-    the second is their answers to the fours question that we ask."""
+    the output as a tuple where the first element is the ranking output and
+    the second element is a dictionary containing the user's answers to the four questions."""
     rankings = runner_rankings(RANKINGS)
     questions = runner_questions(GENRES, LANGUAGES)
     return (rankings, questions)
@@ -267,7 +261,7 @@ def display_recommended_movies(recommended_movies: List) -> None:
     The first movie that is displayed on the screen is the most recommended movie and
     the second movie is the second most recommended and so on.
 
-    The recommended_movies are the list of recommended movies
+    The recommended_movies are the list of recommended movies.
 
     Preconditions:
         - len(recommended_movies) == 10
