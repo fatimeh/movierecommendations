@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Tuple
 import tkinter as tk
 
 DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -53,10 +53,11 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
 
 
 def create_decade_options(start_year: int, end_year: int) -> tuple:
-    """Return a tuple where the first element is a list containing the string representation of all the decades between the
-    starting year and ending yearand the second element is a list containing the same decades except 
-    that each item is a tuple of integers where the first integer is the starting year of that decade 
-    and the second number is the ending year of that decade.
+    """Return a tuple where the first element is a list containing the string representation of
+     all the decades between the starting year and ending yearand the second element is a list
+     containing the same decades except that each item is a tuple of integers where the first
+     integer is the starting year of that decade and the second number
+     is the ending year of that decade.
 
     Preconditions:
         - start_year >= 0
@@ -175,10 +176,11 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
     """Create the listbox that allows user to choose their language preference.
 
      This method will mutate the user_answer dictionary when the submit button is clicked
-     to add the user's answer to the user_answer dictionary. 
+     to add the user's answer to the user_answer dictionary.
 
      The user_answer dictionary is the dictionary that contains all of the answers that
-     the user has given so far and the language list is a list that has all languages in the dataset.
+     the user has given so far and the language list is a list that has all languages
+     in the dataset.
 
      Preconditions:
         - 0 <= len(user_answer) < 5
