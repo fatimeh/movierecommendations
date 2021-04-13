@@ -20,52 +20,37 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 from __future__ import annotations
 from typing import Dict, List, Any, Tuple
 import tkinter as tk
+import pandas as pd
 
 
-GENRES = ['Action', 'Adult', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
-          'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music',
-          'Musical', 'Mystery', 'News', 'Reality-TV', 'Romance', 'Sci-Fi', 'Sport', 'Thriller',
-          'War', 'Western']
-LANGUAGES = ['Abkhazian', 'Aboriginal', 'Acholi', 'Afrikaans', 'Akan', 'Albanian', 'Algonquin',
-             'American Sign Language', 'Amharic', 'Ancient (to 1453)', 'Apache languages', 'Arabic',
-             'Aragonese', 'Aramaic', 'Arapaho', 'Armenian', 'Aromanian', 'Assamese',
-             'Assyrian Neo-Aramaic', 'Athapascan languages', 'Australian Sign Language', 'Awadhi',
-             'Aymara', 'Azerbaijani', 'Bable', 'Balinese', 'Bambara', 'Basque', 'Belarusian',
-             'Bemba', 'Bengali', 'Berber languages', 'Bhojpuri', 'Bicolano', 'Bosnian',
-             'Brazilian Sign Language', 'Breton', 'British Sign Language', 'Bulgarian', 'Burmese',
-             'Cantonese', 'Catalan', 'Central American Indian languages', 'Chechen', 'Cheyenne',
-             'Chinese', 'Cornish', 'Corsican', 'Cree', 'Creek', 'Crimean Tatar', 'Croatian', 'Crow',
-             'Czech', 'Danish', 'Dari', 'Dinka', 'Dutch', 'Dyula', 'Dzongkha', 'Eastern Frisian',
-             'Egyptian (Ancient)', 'English', 'Esperanto', 'Estonian', 'Ewe', 'Faroese', 'Filipino',
-             'Finnish', 'Flemish', 'French', 'French Sign Language', 'Frisian', 'Fulah', 'Gallegan',
-             'Georgian', 'German', 'German Sign Language', 'Greek', 'Greenlandic', 'Guarani',
-             'Gujarati', 'Gumatj', 'Haida', 'Haitian', 'Hakka', 'Haryanvi', 'Hassanya', 'Hausa',
-             'Hawaiian', 'Hebrew', 'Himachali', 'Hindi', 'Hmong', 'Hokkien', 'Hopi', 'Hungarian',
-             'Ibo', 'Icelandic', 'Indian Sign Language', 'Indonesian', 'Inuktitut', 'Irish',
-             'Italian', 'Japanese', 'Japanese Sign Language', 'Kabuverdianu', 'Kabyle',
-             'Kalmyk-Oirat', 'Kannada', 'Kashmiri', 'Kazakh', 'Khanty', 'Khmer', 'Kikuyu',
-             'Kinyarwanda', 'Kirghiz', 'Kirundi', 'Klingon', 'Konkani', 'Korean',
-             'Korean Sign Language', 'Kriolu', 'Kru', 'Kuna', 'Kurdish', 'Ladakhi', 'Ladino', 'Lao',
-             'Latin', 'Latvian', 'Lingala', 'Lithuanian', 'Low German', 'Luxembourgish',
-             'Macedonian', 'Maithili', 'Malay', 'Malayalam', 'Malinka', 'Maltese', 'Mandarin',
-             'Mandingo', 'Manipuri', 'Maori', 'Mapudungun', 'Marathi', 'Mari', 'Maya', 'Mende',
-             'Micmac', 'Middle English', 'Min Nan', 'Minangkabau', 'Mirandese', 'Mixtec', 'Mohawk',
-             'Mongolian', 'Montagnais', 'More', 'Nahuatl', 'Nama', 'Navajo', 'Neapolitan', 'Nenets',
-             'Nepali', 'None', 'Norse', 'North American Indian', 'Norwegian', 'Nyanja', 'Occitan',
-             'Ojibwa', 'Old', 'Old English', 'Oriya', 'Papiamento', 'Parsee', 'Pawnee', 'Persian',
-             'Peul', 'Polish', 'Polynesian', 'Portuguese', 'Pular', 'Punjabi', 'Purepecha',
-             'Pushto', 'Quechua', 'Quenya', 'Raeto-Romance', 'Rajasthani', 'Rhaetian', 'Romanian',
-             'Romany', 'Rotuman', 'Russian', 'Russian Sign Language', 'Ryukyuan', 'Saami', 'Samoan',
-             'Sanskrit', 'Sardinian', 'Scanian', 'Scots', 'Scottish Gaelic', 'Serbian',
-             'Serbo-Croatian', 'Shanghainese', 'Shanxi', 'Shona', 'Shoshoni', 'Sicilian',
-             'Sign Languages', 'Sindarin', 'Sindhi', 'Sinhalese', 'Sioux', 'Slovak', 'Slovenian',
-             'Somali', 'Songhay', 'Soninke', 'Southern Sotho', 'Spanish', 'Spanish Sign Language',
-             'Sranan', 'Swahili', 'Swedish', 'Swiss German', 'Syriac', 'Tagalog', 'Tajik',
-             'Tamashek', 'Tamil', 'Tarahumara', 'Tatar', 'Telugu', 'Teochew', 'Thai', 'Tibetan',
-             'Tigrigna', 'Tok Pisin', 'Tonga', 'Tswana', 'Tulu', 'Tupi', 'Turkish', 'Turkmen',
-             'Tzotzil', 'Uighur', 'Ukrainian', 'Ukrainian Sign Language', 'Ungwatsi', 'Urdu',
-             'Uzbek', 'Vietnamese', 'Visayan', 'Washoe', 'Wayuu', 'Welsh', 'Wolof', 'Xhosa',
-             'Yakut', 'Yiddish', 'Yoruba', 'Zulu']
+def load_genres_and_languages(movies_file: str) -> Tuple[List, List]:
+    """
+    Return a tuple of two lists, Genres and Languages.
+
+    The Genres list will be an alphabetically sorted list containing all the genres available
+    in our dataset.
+
+    The Language list will be an alphabetically sorted list containing all the languages
+    available in our dataset.
+
+    Preconditions:
+        - movies_file is the path to a CSV file corresponding to the IMDb movies data.
+    """
+    genres = set()
+    languages = set()
+    movies = pd.read_csv(movies_file, usecols={'genre', 'language'})
+
+    for index in movies.index:
+        genres.update(set(movies['genre'][index].split(', ')))
+        languages.update(set(movies['language'][index].split(', ')))
+
+    genres_lst = list(genres)
+    languages_lst = list(languages)
+
+    genres_lst.sort()
+    languages_lst.sort()
+
+    return (genres_lst, languages_lst)
 
 
 def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
@@ -260,10 +245,10 @@ def runner_rankings() -> list:
     tk.Label(window, text="Ranking").pack()
     tk.Label(window, text="Please take a look at the following 4 attributes "
                           "and rank them in order of importance to you.").pack()
-    tk.Label(window, text="First, select the most important attribute and click submit").pack()
+    tk.Label(window, text="First, select the most important attribute and click submit.").pack()
     tk.Label(window, text="Then, select the next attribute in your rankings and click "
-                          "submit").pack()
-    tk.Label(window, text="Repeatedly select and click submit in order of importance"
+                          "submit.").pack()
+    tk.Label(window, text="Repeatedly select and click submit in your chosen order of importance"
                           " until you have submitted all four attributes.").pack()
     ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
     ranking_listbox.insert(1, ranking[0])
@@ -291,7 +276,8 @@ def main_runner() -> Tuple[list, dict]:
     the output as a tuple where the first element is the ranking output and
     the second element is a dictionary containing the user's answers to the four questions."""
     rankings = runner_rankings()
-    questions = runner_questions(GENRES, LANGUAGES)
+    genres, languages = load_genres_and_languages('IMDb movies.csv')
+    questions = runner_questions(genres, languages)
     return (rankings, questions)
 
 

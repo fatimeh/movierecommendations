@@ -18,7 +18,7 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from entities import Movie, _MovieVertex, MovieGraph, load_dataset
+from entities import Movie, load_dataset
 from visualization import main_runner, display_recommended_movies
 
 
