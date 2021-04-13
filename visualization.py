@@ -22,13 +22,51 @@ from typing import Dict, List, Any, Tuple
 import tkinter as tk
 
 DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
-RANKINGS = ['genre', 'release_year', 'language', 'duration']
-GENRES = ['Western', 'Family', 'Adventure', 'War', 'Fantasy', 'History', 'Music', 'Documentary',
-          'Reality-TV', 'Animation', 'Sport', 'Action', 'Mystery', 'Crime', 'Drama', 'Horror',
-          'Film-Noir', 'Musical', 'Comedy', 'Adult', 'Romance', 'Sci-Fi', 'Biography', 'News',
-          'Thriller']
-LANGUAGES = ['Quechua', 'Gujarati', 'Kabyle', 'Mari', 'Filipino', 'Mongolian', 'Aramaic', 'Songhay',
-             'Afrikaans', 'English', 'Crimean Tatar', 'Sicilian', 'American Sign Language']
+RANKINGS = ['Genre', 'Release Year', 'Language', 'Duration']
+GENRES = ['Action', 'Adult', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
+          'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music',
+          'Musical', 'Mystery', 'News', 'Reality-TV', 'Romance', 'Sci-Fi', 'Sport', 'Thriller',
+          'War', 'Western']
+LANGUAGES = ['Abkhazian', 'Aboriginal', 'Acholi', 'Afrikaans', 'Akan', 'Albanian', 'Algonquin',
+             'American Sign Language', 'Amharic', 'Ancient (to 1453)', 'Apache languages', 'Arabic',
+             'Aragonese', 'Aramaic', 'Arapaho', 'Armenian', 'Aromanian', 'Assamese',
+             'Assyrian Neo-Aramaic', 'Athapascan languages', 'Australian Sign Language', 'Awadhi',
+             'Aymara', 'Azerbaijani', 'Bable', 'Balinese', 'Bambara', 'Basque', 'Belarusian',
+             'Bemba', 'Bengali', 'Berber languages', 'Bhojpuri', 'Bicolano', 'Bosnian',
+             'Brazilian Sign Language', 'Breton', 'British Sign Language', 'Bulgarian', 'Burmese',
+             'Cantonese', 'Catalan', 'Central American Indian languages', 'Chechen', 'Cheyenne',
+             'Chinese', 'Cornish', 'Corsican', 'Cree', 'Creek', 'Crimean Tatar', 'Croatian', 'Crow',
+             'Czech', 'Danish', 'Dari', 'Dinka', 'Dutch', 'Dyula', 'Dzongkha', 'Eastern Frisian',
+             'Egyptian (Ancient)', 'English', 'Esperanto', 'Estonian', 'Ewe', 'Faroese', 'Filipino',
+             'Finnish', 'Flemish', 'French', 'French Sign Language', 'Frisian', 'Fulah', 'Gallegan',
+             'Georgian', 'German', 'German Sign Language', 'Greek', 'Greenlandic', 'Guarani',
+             'Gujarati', 'Gumatj', 'Haida', 'Haitian', 'Hakka', 'Haryanvi', 'Hassanya', 'Hausa',
+             'Hawaiian', 'Hebrew', 'Himachali', 'Hindi', 'Hmong', 'Hokkien', 'Hopi', 'Hungarian',
+             'Ibo', 'Icelandic', 'Indian Sign Language', 'Indonesian', 'Inuktitut', 'Irish',
+             'Italian', 'Japanese', 'Japanese Sign Language', 'Kabuverdianu', 'Kabyle',
+             'Kalmyk-Oirat', 'Kannada', 'Kashmiri', 'Kazakh', 'Khanty', 'Khmer', 'Kikuyu',
+             'Kinyarwanda', 'Kirghiz', 'Kirundi', 'Klingon', 'Konkani', 'Korean',
+             'Korean Sign Language', 'Kriolu', 'Kru', 'Kuna', 'Kurdish', 'Ladakhi', 'Ladino', 'Lao',
+             'Latin', 'Latvian', 'Lingala', 'Lithuanian', 'Low German', 'Luxembourgish',
+             'Macedonian', 'Maithili', 'Malay', 'Malayalam', 'Malinka', 'Maltese', 'Mandarin',
+             'Mandingo', 'Manipuri', 'Maori', 'Mapudungun', 'Marathi', 'Mari', 'Maya', 'Mende',
+             'Micmac', 'Middle English', 'Min Nan', 'Minangkabau', 'Mirandese', 'Mixtec', 'Mohawk',
+             'Mongolian', 'Montagnais', 'More', 'Nahuatl', 'Nama', 'Navajo', 'Neapolitan', 'Nenets',
+             'Nepali', 'None', 'Norse', 'North American Indian', 'Norwegian', 'Nyanja', 'Occitan',
+             'Ojibwa', 'Old', 'Old English', 'Oriya', 'Papiamento', 'Parsee', 'Pawnee', 'Persian',
+             'Peul', 'Polish', 'Polynesian', 'Portuguese', 'Pular', 'Punjabi', 'Purepecha',
+             'Pushto', 'Quechua', 'Quenya', 'Raeto-Romance', 'Rajasthani', 'Rhaetian', 'Romanian',
+             'Romany', 'Rotuman', 'Russian', 'Russian Sign Language', 'Ryukyuan', 'Saami', 'Samoan',
+             'Sanskrit', 'Sardinian', 'Scanian', 'Scots', 'Scottish Gaelic', 'Serbian',
+             'Serbo-Croatian', 'Shanghainese', 'Shanxi', 'Shona', 'Shoshoni', 'Sicilian',
+             'Sign Languages', 'Sindarin', 'Sindhi', 'Sinhalese', 'Sioux', 'Slovak', 'Slovenian',
+             'Somali', 'Songhay', 'Soninke', 'Southern Sotho', 'Spanish', 'Spanish Sign Language',
+             'Sranan', 'Swahili', 'Swedish', 'Swiss German', 'Syriac', 'Tagalog', 'Tajik',
+             'Tamashek', 'Tamil', 'Tarahumara', 'Tatar', 'Telugu', 'Teochew', 'Thai', 'Tibetan',
+             'Tigrigna', 'Tok Pisin', 'Tonga', 'Tswana', 'Tulu', 'Tupi', 'Turkish', 'Turkmen',
+             'Tzotzil', 'Uighur', 'Ukrainian', 'Ukrainian Sign Language', 'Ungwatsi', 'Urdu',
+             'Uzbek', 'Vietnamese', 'Visayan', 'Washoe', 'Wayuu', 'Welsh', 'Wolof', 'Xhosa',
+             'Yakut', 'Yiddish', 'Yoruba', 'Zulu']
 
 
 def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
@@ -153,9 +191,9 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
     """
     year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", padx=15, pady=15)
     year_frame.grid(row=1, column=0)
-    decades_string = create_decade_options(1960, 2020)[0]
-    decades_tuples = create_decade_options(1960, 2020)[1]
-    year_listbox = tk.Listbox(year_frame, height=len(decades_string), selectmode='SINGLE')
+    decades_string = create_decade_options(1890, 2020)[0]
+    decades_tuples = create_decade_options(1890, 2020)[1]
+    year_listbox = tk.Listbox(year_frame, height=10, selectmode='SINGLE')
     for i in range(1, len(decades_string) + 1):
         year_listbox.insert(i, decades_string[i - 1])
 
@@ -188,7 +226,7 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
      """
     language_frame = tk.LabelFrame(window, text="Which language do you want?", padx=15, pady=15)
     language_frame.grid(row=1, column=1)
-    language_listbox = tk.Listbox(language_frame, height=5, selectmode='SINGLE')
+    language_listbox = tk.Listbox(language_frame, height=10, selectmode='SINGLE')
     for j in range(0, len(languages)):
         language_listbox.insert(j + 1, languages[j])
 
@@ -220,13 +258,13 @@ def runner_rankings(ranking: List) -> list:
     window = tk.Tk()
     window.geometry("800x800")
     tk.Label(window, text="Ranking").pack()
-    tk.Label(window, text="Please think about the following 4 attributes "
-                          "and see which one you cares the most").pack()
-    tk.Label(window, text="Select the one that is the most important and click submit").pack()
-    tk.Label(window, text="Then select the one that is the second most important and click "
+    tk.Label(window, text="Please take a look at the following 4 attributes "
+                          "and rank them in order of importance to you.").pack()
+    tk.Label(window, text="First, select the most important attribute and click submit").pack()
+    tk.Label(window, text="Then, select the next attribute in your rankings and click "
                           "submit").pack()
     tk.Label(window, text="Repeatedly select and click submit in order of importance"
-                          " until you select all four").pack()
+                          " until you have submitted all four attributes.").pack()
     ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE')
     ranking_listbox.insert(1, ranking[0])
     ranking_listbox.insert(2, ranking[1])
@@ -272,7 +310,7 @@ def display_recommended_movies(recommended_movies: List) -> None:
     window = tk.Tk()
     window.geometry("500x500")
 
-    tk.Label(window, text="The 10 recommended movies are listed below").pack()
+    tk.Label(window, text="The 10 recommended movies are listed below:").pack()
 
     for i in range(0, 10):
         tk.Label(window, text=recommended_movies[i]).pack()
@@ -284,14 +322,14 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    import python_ta.contracts
-    python_ta.contracts.DEBUG_CONTRACTS = False
-    python_ta.contracts.check_all_contracts()
-
-    import python_ta
-
-    python_ta.check_all(config={
-        'max-line-length': 100,
-        'extra-imports': ['typing', 'tkinter'],
-        'allowed-io': []
-    })
+    # import python_ta.contracts
+    # python_ta.contracts.DEBUG_CONTRACTS = False
+    # python_ta.contracts.check_all_contracts()
+    #
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'max-line-length': 100,
+    #     'extra-imports': ['typing', 'tkinter'],
+    #     'allowed-io': []
+    # })

@@ -19,7 +19,7 @@ Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
 from entities import Movie, _MovieVertex, MovieGraph, load_dataset
-from visualization import runner_questions, runner_rankings
+from visualization import main_runner, display_recommended_movies
 
 
 def main() -> None:
@@ -30,25 +30,42 @@ def main() -> None:
     # Create user vertex and movie graph based on input
     # Call the recommendation function and get the list of movies
     # Display the recommended movies
-    user_input = runner_questions()
-    user_preferences = runner_rankings()
+    user_preferences, user_input = main_runner()
+
+    for i in range(len(user_preferences)):
+        if user_preferences[i] == 'Genre':
+            user_preferences[i] = 'genre'
+        elif user_preferences[i] == 'Release Year':
+            user_preferences[i] = 'release_year'
+        elif user_preferences[i] == 'Language':
+            user_preferences[i] = 'language'
+        else:
+            user_preferences[i] = 'duration'
 
     start_year = user_input['release_year'][0]
     stop_year = user_input['release_year'][1]
     year_range = {year for year in range(start_year, stop_year)}
 
-    genre = user_input['genre']
+    genre = user_input['genres']
 
     duration_str = user_input['duration']
-    duration_tpl = (60, 180)
+
+    if duration_str == 'Short(<60 min)':
+        duration_tpl = (0, 60)
+    elif duration_str == 'Medium (60-180 min)':
+        duration_tpl = (60, 181)
+    else:
+        duration_tpl = (181, 809)
+
     duration_range = {duration for duration in range(duration_tpl[0], duration_tpl[1])}
 
     language = user_input['language']
 
-    user = Movie('user', 'User', year_range, genre, duration_range, language, 5.0)
+    user = Movie('user', 'User', year_range, {genre}, duration_range, {language}, 5.0)
 
     graph = load_dataset('IMDb movies.csv', user)
-    graph.recommend_movies(user.movie_id, user_preferences)
+    movies = graph.recommend_movies(user.movie_id, user_preferences)
+    display_recommended_movies(movies)
 
 
 GENRES = ['Western', 'Family', 'Adventure', 'War', 'Fantasy', 'History', 'Music', 'Documentary',
@@ -102,14 +119,14 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    import python_ta.contracts
-    python_ta.contracts.DEBUG_CONTRACTS = False
-    python_ta.contracts.check_all_contracts()
-
-    import python_ta
-
-    python_ta.check_all(config={
-        'max-line-length': 100,
-        'extra-imports': ['entities', 'visualization'],
-        'allowed-io': []
-    })
+    # import python_ta.contracts
+    # python_ta.contracts.DEBUG_CONTRACTS = False
+    # python_ta.contracts.check_all_contracts()
+    #
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'max-line-length': 100,
+    #     'extra-imports': ['entities', 'visualization'],
+    #     'allowed-io': []
+    # })

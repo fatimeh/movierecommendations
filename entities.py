@@ -42,13 +42,14 @@ def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     """
     movie_graph = MovieGraph()
 
-    attributes = {'imdb_title_id', 'title', 'year', 'genre', 'duration', 'language', 'avg_vote'}
+    attributes = {'imdb_title_id', 'original_title', 'year', 'genre', 'duration', 'language',
+                  'avg_vote'}
     movies = pd.read_csv(movies_file, usecols=lambda x: x in attributes)
     movie_graph.add_vertex(user_movie)
 
     for index in movies.index:
         movie_id = str(movies['imdb_title_id'][index])
-        title = str(movies['title'][index])
+        title = str(movies['original_title'][index])
         release_year = {int(movies['year'][index])}
         genre = set(movies['genre'][index].split(', '))
         duration = {int(movies['duration'][index])}
@@ -279,14 +280,14 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    import python_ta.contracts
-    python_ta.contracts.DEBUG_CONTRACTS = False
-    python_ta.contracts.check_all_contracts()
-
-    import python_ta
-
-    python_ta.check_all(config={
-        'max-line-length': 100,
-        'extra-imports': ['dataclasses', 'typing', 'pandas'],
-        'allowed-io': []
-    })
+    # import python_ta.contracts
+    # python_ta.contracts.DEBUG_CONTRACTS = False
+    # python_ta.contracts.check_all_contracts()
+    #
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'max-line-length': 100,
+    #     'extra-imports': ['dataclasses', 'typing', 'pandas'],
+    #     'allowed-io': []
+    # })
