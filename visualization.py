@@ -21,8 +21,7 @@ from __future__ import annotations
 from typing import Dict, List, Any, Tuple
 import tkinter as tk
 
-DURATIONS = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
-RANKINGS = ['Genre', 'Release Year', 'Language', 'Duration']
+
 GENRES = ['Action', 'Adult', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
           'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music',
           'Musical', 'Mystery', 'News', 'Reality-TV', 'Romance', 'Sci-Fi', 'Sport', 'Thriller',
@@ -243,7 +242,7 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
     language_listbox.pack()
 
 
-def runner_rankings(ranking: List) -> list:
+def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses.
     The first item is the attributes that the user ranks first which is the most important, and
     the second item is the second most important attribute that the user ranks and so on.
@@ -254,6 +253,7 @@ def runner_rankings(ranking: List) -> list:
         - len(ranking) == 4
 
     """
+    ranking = ['Genre', 'Release Year', 'Language', 'Duration']
     rank = []
     window = tk.Tk()
     window.geometry("800x800")
@@ -290,7 +290,7 @@ def main_runner() -> Tuple[list, dict]:
     """Display the ranking and the questions window to get the user input and return
     the output as a tuple where the first element is the ranking output and
     the second element is a dictionary containing the user's answers to the four questions."""
-    rankings = runner_rankings(RANKINGS)
+    rankings = runner_rankings()
     questions = runner_questions(GENRES, LANGUAGES)
     return (rankings, questions)
 
