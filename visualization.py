@@ -286,16 +286,19 @@ def display_recommended_movies(recommended_movies: List) -> None:
     The recommended_movies are the list of recommended movies.
 
     Preconditions:
-        - len(recommended_movies) == 10
+        - len(recommended_movies) <= 10
 
     """
     window = tk.Tk()
     window.geometry("500x500")
 
-    tk.Label(window, text="The 10 recommended movies are listed below:").pack()
+    if recommended_movies == []:
+        tk.Label(window, text="We were unable to find movies that match your preferences.").pack()
+    else:
+        tk.Label(window, text="The 10 recommended movies are listed below:").pack()
 
-    for i in range(0, 10):
-        tk.Label(window, text=recommended_movies[i]).pack()
+        for i in range(0, len(recommended_movies)):
+            tk.Label(window, text=recommended_movies[i]).pack()
 
     window.mainloop()
 

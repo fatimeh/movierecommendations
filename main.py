@@ -65,6 +65,7 @@ def main() -> None:
 
     graph = load_dataset('IMDb movies.csv', user)
     movies = graph.recommend_movies(user.movie_id, user_preferences)
+
     display_recommended_movies(movies)
 
 
