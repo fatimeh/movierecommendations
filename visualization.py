@@ -234,12 +234,9 @@ def runner_rankings() -> list:
 
     The ranking parameter is a list with the 4 attributes that the users will rank.
 
-    Preconditions:
-        - len(ranking) == 4
-
     """
     ranking = ['Genre', 'Release Year', 'Language', 'Duration']
-    rank = []
+    user_ranking = []
     window = tk.Tk()
     window.geometry("800x800")
     tk.Label(window, text="Ranking").pack()
@@ -258,8 +255,7 @@ def runner_rankings() -> list:
 
     def submit() -> None:
         """Collect user selection and delete the option from listbox."""
-        rank.append(ranking[ranking_listbox.curselection()[0]])
-        ranking.remove(ranking[ranking_listbox.curselection()[0]])
+        user_ranking.append(ranking[ranking_listbox.curselection()[0]])
         ranking_listbox.delete(ranking_listbox.curselection()[0])
         if ranking_listbox.size() == 0:
             window.destroy()
