@@ -65,6 +65,7 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
     duration = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
     window = tk.Tk()
     window.geometry("600x600")
+    window.configure(bg="black")
     create_genres_listbox(window, answers_so_far, genres)
     create_duration_listbox(window, answers_so_far, duration)
     create_year_listbox(window, answers_so_far)
@@ -107,10 +108,10 @@ def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List[str]) -
         - 0 <= len(user_answer) < 5
 
      """
-    genre_frame = tk.LabelFrame(window, text="What genre do you prefer?", fg="black",
+    genre_frame = tk.LabelFrame(window, text="What genre do you prefer?", bg="black", fg="white",
                                 padx=15, pady=15)
     genre_frame.grid(row=0, column=0)
-    genre_listbox = tk.Listbox(genre_frame, fg="black", height=5, selectmode='SINGLE')
+    genre_listbox = tk.Listbox(genre_frame, fg="white", bg="blue", height=5, selectmode='SINGLE')
     for i in range(len(genres)):
         genre_listbox.insert(i + 1, genres[i])
 
@@ -141,10 +142,11 @@ def create_duration_listbox(window: tk.Tk, user_answer: dict, duration: List) ->
         - 0 <= len(user_answer) < 5
 
     """
-    duration_frame = tk.LabelFrame(window, text="What duration do you want?", fg="black",
-                                   padx=15, pady=15)
+    duration_frame = tk.LabelFrame(window, text="What duration do you want?", bg="black",
+                                   fg="white", padx=15, pady=15)
     duration_frame.grid(row=0, column=1)
-    duration_listbox = tk.Listbox(duration_frame, height=5, selectmode='SINGLE', fg="black")
+    duration_listbox = tk.Listbox(duration_frame, height=5, selectmode='SINGLE',
+                                  fg="white", bg="blue")
     duration_listbox.insert(1, duration[0])
     duration_listbox.insert(2, duration[1])
     duration_listbox.insert(3, duration[2])
@@ -175,12 +177,12 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
         - 0 <= len(user_answer) < 5
 
     """
-    year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", fg="black",
+    year_frame = tk.LabelFrame(window, text="Which decade do you prefer?", fg="white", bg="black",
                                padx=15, pady=15)
     year_frame.grid(row=1, column=0)
     decades_string = create_decade_options(1890, 2020)[0]
     decades_tuples = create_decade_options(1890, 2020)[1]
-    year_listbox = tk.Listbox(year_frame, height=10, selectmode='SINGLE', fg="black")
+    year_listbox = tk.Listbox(year_frame, height=10, selectmode='SINGLE', fg="white", bg="blue")
     for i in range(1, len(decades_string) + 1):
         year_listbox.insert(i, decades_string[i - 1])
 
@@ -211,10 +213,11 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
         - 0 <= len(user_answer) < 5
 
      """
-    language_frame = tk.LabelFrame(window, text="Which language do you want?", fg="black",
-                                   padx=15, pady=15)
+    language_frame = tk.LabelFrame(window, text="Which language do you want?", fg="white",
+                                   bg="black", padx=15, pady=15)
     language_frame.grid(row=1, column=1)
-    language_listbox = tk.Listbox(language_frame, height=10, selectmode='SINGLE', fg="black")
+    language_listbox = tk.Listbox(language_frame, height=10, selectmode='SINGLE', fg="white",
+                                  bg="blue")
     for j in range(0, len(languages)):
         language_listbox.insert(j + 1, languages[j])
 
@@ -243,16 +246,19 @@ def runner_rankings() -> list:
     user_ranking = []
     window = tk.Tk()
     window.geometry("800x600")
-    tk.Label(window, text="Ranking", fg="black").pack()
+    window.configure(bg="black")
+    tk.Label(window, text="Ranking", fg="white", bg="black").pack()
     tk.Label(window, text="Please take a look at the following 4 attributes "
-                          "and rank them in order of importance to you.", fg="black").pack()
+                          "and rank them in order of importance to you.", fg="white",
+             bg="black").pack()
     tk.Label(window, text="First, select the most important attribute and click submit.",
-             fg="black").pack()
+             fg="white", bg="black").pack()
     tk.Label(window, text="Then, select the next attribute in your rankings and click "
-                          "submit.", fg="black").pack()
+                          "submit.", fg="white", bg="black").pack()
     tk.Label(window, text="Repeatedly select and click submit in your chosen order of importance"
-                          " until you have submitted all four attributes.", fg="black").pack()
-    ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE', fg="black")
+                          " until you have submitted all four attributes.", fg="white",
+             bg="black").pack()
+    ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE', fg="white", bg="blue")
     ranking_listbox.insert(1, ranking[0])
     ranking_listbox.insert(2, ranking[1])
     ranking_listbox.insert(3, ranking[2])
@@ -296,18 +302,19 @@ def display_recommended_movies(recommended_movies: List) -> None:
     """
     window = tk.Tk()
     window.geometry("500x500")
+    window.configure(bg="black")
 
     i = len(recommended_movies)
 
     if recommended_movies == []:
         tk.Label(window, text="We were unable to find movies that match your preferences.",
-                 fg="black").pack()
+                 fg="white", bg="black").pack()
     else:
         tk.Label(window, text='The ' + f'{i}' + ' recommended movies are listed below:',
-                 fg="black").pack()
+                 fg="white", bg="black").pack()
 
         for index in range(0, len(recommended_movies)):
-            tk.Label(window, text=recommended_movies[index], fg="black").pack()
+            tk.Label(window, text=recommended_movies[index], fg="white", bg="black").pack()
 
     window.mainloop()
 
