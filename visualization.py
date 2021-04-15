@@ -68,7 +68,7 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
     answers_so_far = {}
     duration = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
     window = tk.Tk()
-    window.geometry("600x600")
+    window.geometry("350x400")
     window.configure(bg="black")
     create_genres_listbox(window, answers_so_far, genres)
     create_duration_listbox(window, answers_so_far, duration)
@@ -249,9 +249,10 @@ def runner_rankings() -> list:
     ranking = ['Genre', 'Release Year', 'Language', 'Duration']
     user_ranking = []
     window = tk.Tk()
-    window.geometry("800x600")
+    window.geometry("650x400")
     window.configure(bg="black")
-    tk.Label(window, text="Ranking", fg="white", bg="black").pack()
+    tk.Label(window, text="Rankings", fg="white", bg="black").pack()
+    tk.Label(window, text='', fg="white", bg="black").pack()
     tk.Label(window, text="Please take a look at the following 4 attributes "
                           "and rank them in order of importance to you.", fg="white",
              bg="black").pack()
@@ -262,6 +263,7 @@ def runner_rankings() -> list:
     tk.Label(window, text="Repeatedly select and click submit in your chosen order of importance"
                           " until you have submitted all four attributes.", fg="white",
              bg="black").pack()
+    tk.Label(window, text='', fg="white", bg="black").pack()
     ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE', fg="white", bg="blue")
     ranking_listbox.insert(1, ranking[0])
     ranking_listbox.insert(2, ranking[1])
@@ -276,8 +278,9 @@ def runner_rankings() -> list:
             window.destroy()
 
     submit_button = tk.Button(window, text='Submit', command=submit, fg="black")
-    submit_button.pack()
     ranking_listbox.pack()
+    tk.Label(window, text='', fg="white", bg="black").pack()
+    submit_button.pack()
     window.mainloop()
     return user_ranking
 
