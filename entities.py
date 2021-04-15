@@ -115,9 +115,10 @@ class _MovieVertex:
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
 
-    The structure of each attributes for this dataclass is similar to the WeightedVertex class
-    in assignment 3 except that all vertices here are all movies so there is no kind attribute
-    and the value of the neighbours is the set of common trait rather than the similarity
+    The structure of the attributes for this dataclass takes inspiration from the WeightedVertex
+    class in Assignment 3, created by David Liu and Isaac Waller.However, we changed the
+    implementation to fit our program.The vertices here are all movies so there is no kind attribute
+    and the value of the neighbours is the set of common traits rather than the similarity
     score.
 
     Instance Attributes:
@@ -141,8 +142,9 @@ class MovieGraph:
 
     There will be an edge between 2 movies if and only if there is at least 1 trait in common.
 
-    The instance attributes and the functions implemented here is similar to the functions for
-    WeightedGraph in assignment 3 but with changes that is specific for our movie vertex.
+    The instance attributes and the functions implemented here take inspiration from the functions
+    for WeightedGraph in Assignment 3, created by David Liu and Isaac Waller but with changes that
+    are specific to our movie vertex implementation and overall program.
     """
     # Private Instance Attributes:
     #     - _vertices:
@@ -219,26 +221,6 @@ class MovieGraph:
                 common = v1.neighbours[vertex]
 
         return common
-
-    def adjacent(self, item1: str, item2: str) -> bool:
-        """Return whether item1 and item2 are adjacent vertices in this graph.
-
-        Return False if item1 or item2 do not appear as vertices in this graph.
-        >>> g = MovieGraph()
-        >>> user = Movie('user_vertex', 'User', {2010}, {'Comedy'}, {45}, {'English'}, 5.0)
-        >>> movie1 = Movie('t1', 'Movie1', {2009}, {'Comedy'}, {90}, {'French'}, 6.0)
-        >>> g.add_vertex(user)
-        >>> g.add_vertex(movie1)
-        >>> g.add_edge(user.movie_id, movie1.movie_id)
-        >>> g.adjacent(user.movie_id, movie1.movie_id)
-        True
-        """
-
-        if item1 in self._vertices and item2 in self._vertices:
-            v1 = self._vertices[item1]
-            return any(v2.item.movie_id == item2 for v2 in v1.neighbours)
-        else:
-            return False
 
     def get_neighbours(self, item: str) -> set:
         """Return a set of the neighbours of the given item.
