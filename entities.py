@@ -19,7 +19,6 @@ This file is Copyright (c) 2021 Fatimeh Hassan, Shilin Zhang,
 Dorsa Molaverdikhani, and Nimit Bhanshali.
 """
 from __future__ import annotations
-from dataclasses import dataclass
 from typing import Set, List
 import pandas as pd
 
