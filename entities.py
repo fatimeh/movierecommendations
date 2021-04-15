@@ -118,6 +118,11 @@ class _MovieVertex:
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
 
+    The structure of each attributes for this dataclass is similar to the WeightedVertex class
+    in assignment 3 except that all vertices here are all movies so there is no kind attribute
+    and the value of the neighbours is the set of common trait rather than the similarity
+    score.
+
     Instance Attributes:
         - item: The data stored in this vertex, representing a Movie object.
         - neighbours: The vertices that are adjacent to this vertex.
@@ -139,6 +144,9 @@ class MovieGraph:
     between movies.
 
     There will be an edge between 2 movies if and only if there is at least 1 trait in common.
+
+    The instance attributes and the functions implemented here is similar to the functions for
+    WeightedGraph in assignment 3 but with changes that is specific for our movie vertex.
     """
     # Private Instance Attributes:
     #     - _vertices:
