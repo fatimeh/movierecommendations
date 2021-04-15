@@ -8,7 +8,8 @@ visualization of the movie recommender system.
 
 We used the tutorial available at
 https://www.geeksforgeeks.org/how-to-get-selected-value-from-listbox-in-tkinter/
-as a guide to help us implement the functions involving the Tkinter listbox.
+as a guide to help us implement the functions involving the Tkinter listbox, we made  
+changes to customize it in order to fit the purposes of our project.
 
 Copyright and Usage Information
 ===============================
