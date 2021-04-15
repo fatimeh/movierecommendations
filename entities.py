@@ -113,7 +113,7 @@ class _MovieVertex:
     Each vertex item is an instance of a Movie class.
 
     The neighbours is a dictionary where the key is a _MovieVertex object and the value is
-    a set of the traits that the vertex and its neighbours have in common.
+    value of that key is a set of traits that the vertex and its neighbours have in common.
 
     A Vertex is in the neighbours of this Vertex if it has at least one trait
     in common with this Vertex.
