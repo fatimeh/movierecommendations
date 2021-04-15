@@ -26,10 +26,6 @@ def main() -> None:
     """"The main function that will recommend movies to the user based on their inputted
     preferences.
     """
-    # Call the user interface functions to get the user input
-    # Create user vertex and movie graph based on input
-    # Call the recommendation function and get the list of movies
-    # Display the recommended movies
     user_preferences, user_input = main_runner()
 
     for i in range(len(user_preferences)):

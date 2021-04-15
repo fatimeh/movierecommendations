@@ -26,7 +26,6 @@ import pandas as pd
 RATING_BENCHMARK = 8.0
 
 
-# Reading .csv files
 def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     """
     Return a MovieGraph based on the details regarding movies in the given datasets.
@@ -71,7 +70,6 @@ def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     return movie_graph
 
 
-# Movie Object Class
 @dataclass
 class Movie:
     """
@@ -105,7 +103,6 @@ class Movie:
         self.rating = rating
 
 
-# Vertex Class
 class _MovieVertex:
     """
     A vertex in the movie graph.
@@ -138,7 +135,6 @@ class _MovieVertex:
         self.neighbours = {}
 
 
-# Graph Class
 class MovieGraph:
     """A graph used to represent a movie network that keeps track of the common traits
     between movies.
@@ -266,6 +262,41 @@ class MovieGraph:
         else:
             raise ValueError
 
+    def recommend_movies(self, user: str, preferences: List[str]) -> List[str]:
+        """Return a list of recommended movies in order of highest similarity score to lowest,
+        given a user vertex and a list of user preferences.
+
+        In the case two movies have the same similarity score, the movies will be ranked in terms
+        of the IMDb rating they received.
+
+        >>> g = MovieGraph()
+        >>> user_vertex = Movie('user_vertex', 'User', {2009}, {'Comedy'}, {95}, {'English'}, 8.1)
+        >>> movie1 = Movie('t1', 'Movie1', {2010}, {'Comedy'}, {45}, {'French'}, 8.9)
+        >>> user_pref = ['genre', 'release_year', 'language', 'duration']
+        >>> g.add_vertex(user_vertex)
+        >>> g.add_vertex(movie1)
+        >>> g.add_edge(user_vertex.movie_id, movie1.movie_id)
+        >>> g.recommend_movies(user_vertex.movie_id, user_pref)
+        ['Movie1']
+        """
+        movies = {}
+        final_movies = []
+
+        for neighbour in self._vertices[user].neighbours:
+            if neighbour.item.rating >= RATING_BENCHMARK:
+                movie_id = neighbour.item.movie_id
+                title = neighbour.item.title
+                score = self.similarity_score(user, movie_id, preferences)
+                if score >= 10:
+                    movies[title] = score + (neighbour.item.rating / 10)
+
+        sorted_movies = sorted(movies.items(), key=lambda x: x[1], reverse=True)
+
+        for movie in sorted_movies:
+            final_movies.append(movie[0])
+
+        return final_movies[:10]
+
     def similarity_score(self, movie: str, user: str, preferences: List[str]) \
             -> int:
         """Calculate the similarity score between a movie vertex and a user vertex, given
@@ -302,41 +333,6 @@ class MovieGraph:
                 final_score += totals[i]
 
         return final_score
-
-    def recommend_movies(self, user: str, preferences: List[str]) -> List[str]:
-        """Return a list of recommended movies in order of highest similarity score to lowest,
-        given a user vertex and a list of user preferences.
-
-        In the case two movies have the same similarity score, the movies will be ranked in terms
-        of the IMDb rating they received.
-
-        >>> g = MovieGraph()
-        >>> user_vertex = Movie('user_vertex', 'User', {2009}, {'Comedy'}, {95}, {'English'}, 8.1)
-        >>> movie1 = Movie('t1', 'Movie1', {2010}, {'Comedy'}, {45}, {'French'}, 8.9)
-        >>> user_pref = ['genre', 'release_year', 'language', 'duration']
-        >>> g.add_vertex(user_vertex)
-        >>> g.add_vertex(movie1)
-        >>> g.add_edge(user_vertex.movie_id, movie1.movie_id)
-        >>> g.recommend_movies(user_vertex.movie_id, user_pref)
-        ['Movie1']
-        """
-        movies = {}
-        final_movies = []
-
-        for neighbour in self._vertices[user].neighbours:
-            if neighbour.item.rating >= RATING_BENCHMARK:
-                movie_id = neighbour.item.movie_id
-                title = neighbour.item.title
-                score = self.similarity_score(user, movie_id, preferences)
-                if score >= 10:
-                    movies[title] = score + (neighbour.item.rating / 10)
-
-        sorted_movies = sorted(movies.items(), key=lambda x: x[1], reverse=True)
-
-        for movie in sorted_movies:
-            final_movies.append(movie[0])
-
-        return final_movies[:10]
 
 
 if __name__ == '__main__':
