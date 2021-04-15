@@ -6,6 +6,9 @@ Overview and Description
 This Python module contains the functions for the user interface and
 visualization.
 
+We used the tutorial available at https://www.geeksforgeeks.org/how-to-get-selected-value-from-listbox-in-tkinter/ 
+to help us implement the functions involving the Tkinter listboxes.
+
 Copyright and Usage Information
 ===============================
 
