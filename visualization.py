@@ -251,6 +251,10 @@ def create_decade_options(start_year: int, end_year: int) -> tuple:
     Preconditions:
         - start_year >= 0
         - end_year >= 0
+        - end_year > start_year
+        
+    >>> create_decade_options(1960, 1990)
+    (['1960-1970', '1970-1980', '1980-1990'], [(1960, 1970), (1970, 1980), (1980, 1990)])
     """
     decades_string = []
     decades_tuple = []
