@@ -98,6 +98,12 @@ def load_genres_and_languages(movies_file: str) -> Tuple[List, List]:
 
     Preconditions:
         - movies_file is the path to a CSV file corresponding to the IMDb movies data.
+
+    >>> genre, language = load_genres_and_languages('IMDb movies.csv')
+    >>> 'Comedy' in genre
+    True
+    >>> 'English' in language
+    True
     """
     genres = set()
     languages = set()
