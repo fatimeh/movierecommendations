@@ -70,7 +70,6 @@ def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
     return movie_graph
 
 
-@dataclass
 class Movie:
     """
     A data class representing a movie.
@@ -94,6 +93,7 @@ class Movie:
 
     def __init__(self, movie_id: str, title: str, release_year: Set[int], genre: Set[str],
                  duration: Set[int], language: Set[str], rating: float) -> None:
+        """Initialize a new movie object."""
         self.movie_id = movie_id
         self.title = title
         self.release_year = release_year
