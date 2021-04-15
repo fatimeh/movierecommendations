@@ -135,10 +135,10 @@ class _MovieVertex:
 
 # Graph Class
 class MovieGraph:
-    """A weighted graph used to represent a movie network that keeps track of the common traits
+    """A graph used to represent a movie network that keeps track of the common traits
     between movies.
 
-    There will be an edge between 2 movies if and only if there is at least 1 trade in common.
+    There will be an edge between 2 movies if and only if there is at least 1 trait in common.
     """
     # Private Instance Attributes:
     #     - _vertices:
