@@ -1,4 +1,4 @@
-"""CSC111 Winter 2021 Final Project: Visualization
+"""CSC111 Winter 2021 Final Project: Visualization File
 
 Overview and Description
 ========================
@@ -31,7 +31,7 @@ import pandas as pd
 def main_runner() -> Tuple[list, dict]:
     """Display the ranking and the questions window to get the user input and return
     the output as a tuple where the first element is the ranking output and
-    the second element is a dictionary containing the user's answers to the four questions."""
+    the second element is a dictionary containing the user's answers to the questions."""
     rankings = runner_rankings()
     genres, languages = load_genres_and_languages('IMDb movies.csv')
     questions = runner_questions(genres, languages)
@@ -40,11 +40,12 @@ def main_runner() -> Tuple[list, dict]:
 
 def runner_rankings() -> list:
     """Return the a list of rankings that the user chooses.
-    The first item is the attributes that the user ranks first which is the most important, and
-    the second item is the second most important attribute that the user ranks and so on.
 
-    The ranking parameter is a list with the 4 attributes that the users will rank.
+    The first item is the attributes that the user ranks first (which is the most important to the
+    user), and the second item is the second most important attribute that the user ranks and so on.
 
+    The ranking parameter is a list with the 4 attributes that the users will rank in order of
+    preference.
     """
     ranking = ['Genre', 'Release Year', 'Language', 'Duration']
     user_ranking = []
@@ -117,11 +118,11 @@ def load_genres_and_languages(movies_file: str) -> Tuple[List, List]:
 
 def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
     """
-    Returns a dictionary where the keys are the 4 attributes that we asked the user to choose
+    Return a dictionary where the keys are the 4 attributes that we asked the user to choose
     and the values are the user inputs for the 4 questions that we asked.
 
     The genres list contains all genres in the dataset and the languages list contains all
-    languages in the dataset
+    languages in the dataset.
     """
     answers_so_far = {}
     duration = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
@@ -252,7 +253,7 @@ def create_decade_options(start_year: int, end_year: int) -> tuple:
         - start_year >= 0
         - end_year >= 0
         - end_year > start_year
-        
+
     >>> create_decade_options(1960, 1990)
     (['1960-1970', '1970-1980', '1980-1990'], [(1960, 1970), (1970, 1980), (1980, 1990)])
     """
@@ -303,8 +304,6 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
 def display_recommended_movies(recommended_movies: List) -> None:
     """Display all the recommended movies for the particular user input in order of how much
     we recommend the movie.
-    The first movie that is displayed on the screen is the most recommended movie and
-    the second movie is the second most recommended and so on.
 
     The recommended_movies are the list of recommended movies.
 

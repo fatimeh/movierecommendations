@@ -1,10 +1,11 @@
-"""CSC111 Winter 2021 Final Project: Main
+"""CSC111 Winter 2021 Final Project: Main File
 
 Overview and Description
 ========================
 
 This Python module contains the main runner function for the
-movie recommendation system.
+movie recommendation system. It will load the dataset, get the user's input
+in an interactive format and then display the movie recommendations.
 
 Copyright and Usage Information
 ===============================
@@ -66,5 +67,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-
     main()
