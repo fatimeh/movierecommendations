@@ -1,11 +1,11 @@
-"""CSC111 Winter 2021 Final Project
+"""CSC111 Winter 2021 Final Project: Entities
 
 Overview and Description
 ========================
 
-This Python module contains the dataclasses and the function to read the
-dataset. This includes the Movie class, the MovieGraph class, and the MovieVertex
-class.
+This Python module contains the dataclasses and its methods as well as a function
+to read the dataset. This includes the Movie class, the MovieGraph class, and the
+MovieVertex class.
 
 Copyright and Usage Information
 ===============================
@@ -39,6 +39,15 @@ def load_dataset(movies_file: str, user_movie: Movie) -> MovieGraph:
 
     Preconditions:
         - movies_file is the path to a CSV file corresponding to the IMDb movies data.
+
+    >>> user = Movie('user_vertex', 'User', {2010}, {'Comedy'}, {45}, {'English'}, 5.0)
+    >>> g = load_dataset('IMDb movies.csv', user)
+    >>> len(g.get_neighbours(user.movie_id))
+    80018
+    >>> user.title in g.get_neighbours(user.movie_id)
+    False
+    >>> 'Miss Jerry' in g.get_neighbours(user.movie_id)
+    True
     """
     movie_graph = MovieGraph()
 
@@ -148,6 +157,7 @@ class MovieGraph:
 
         Preconditions:
             - item not in self._vertices
+
         """
         self._vertices[item.movie_id] = _MovieVertex(item)
 
@@ -186,6 +196,16 @@ class MovieGraph:
 
         Preconditions:
             - item1 and item2 are vertices in this graph
+
+        >>> g = MovieGraph()
+        >>> user = Movie('user_vertex', 'User', {2010}, {'Thriller'}, {45}, {'English'}, 5.0)
+        >>> movie1 = Movie('t1', 'Movie1', {2009}, {'Thriller'}, {90}, {'English'}, 6.0)
+        >>> g.add_vertex(user)
+        >>> g.add_vertex(movie1)
+        >>> g.add_edge(user.movie_id, movie1.movie_id)
+        >>> traits = g.get_common_trait(user.movie_id, movie1.movie_id)
+        >>> traits == {'genre', 'language'}
+        True
         """
         v1 = self._vertices[item1]
         v2 = self._vertices[item2]
@@ -200,6 +220,14 @@ class MovieGraph:
         """Return whether item1 and item2 are adjacent vertices in this graph.
 
         Return False if item1 or item2 do not appear as vertices in this graph.
+        >>> g = MovieGraph()
+        >>> user = Movie('user_vertex', 'User', {2010}, {'Comedy'}, {45}, {'English'}, 5.0)
+        >>> movie1 = Movie('t1', 'Movie1', {2009}, {'Comedy'}, {90}, {'French'}, 6.0)
+        >>> g.add_vertex(user)
+        >>> g.add_vertex(movie1)
+        >>> g.add_edge(user.movie_id, movie1.movie_id)
+        >>> g.adjacent(user.movie_id, movie1.movie_id)
+        True
         """
 
         if item1 in self._vertices and item2 in self._vertices:
@@ -215,6 +243,14 @@ class MovieGraph:
         themselves.
 
         Raise a ValueError if item does not appear as a vertex in this graph.
+        >>> g = MovieGraph()
+        >>> user = Movie('user_vertex', 'User', {2010}, {'Comedy'}, {45}, {'English'}, 5.0)
+        >>> movie1 = Movie('t1', 'Movie1', {2009}, {'Comedy'}, {90}, {'French'}, 6.0)
+        >>> g.add_vertex(user)
+        >>> g.add_vertex(movie1)
+        >>> g.add_edge(user.movie_id, movie1.movie_id)
+        >>> g.get_neighbours(user.movie_id)
+        {'Movie1'}
         """
         if item in self._vertices:
             v = self._vertices[item]
@@ -232,6 +268,15 @@ class MovieGraph:
             - all({preferences[x] in {'genre', 'release_year', 'language', 'duration'}
             for x in range(0, 4)})
 
+        >>> g = MovieGraph()
+        >>> user_vertex = Movie('user_vertex', 'User', {2010}, {'Comedy'}, {45}, {'English'}, 8.1)
+        >>> movie1 = Movie('t1', 'Movie1', {2010}, {'Comedy'}, {45}, {'French'}, 8.9)
+        >>> user_pref = ['genre', 'release_year', 'language', 'duration']
+        >>> g.add_vertex(user_vertex)
+        >>> g.add_vertex(movie1)
+        >>> g.add_edge(user_vertex.movie_id, movie1.movie_id)
+        >>> g.similarity_score(user_vertex.movie_id, movie1.movie_id, user_pref)
+        16
         """
         final_score = 0
         common_traits = self.get_common_trait(movie, user)
@@ -256,6 +301,16 @@ class MovieGraph:
 
         In the case two movies have the same similarity score, the movies will be ranked in terms
         of the IMDb rating they received.
+
+        >>> g = MovieGraph()
+        >>> user_vertex = Movie('user_vertex', 'User', {2009}, {'Comedy'}, {95}, {'English'}, 8.1)
+        >>> movie1 = Movie('t1', 'Movie1', {2010}, {'Comedy'}, {45}, {'French'}, 8.9)
+        >>> user_pref = ['genre', 'release_year', 'language', 'duration']
+        >>> g.add_vertex(user_vertex)
+        >>> g.add_vertex(movie1)
+        >>> g.add_edge(user_vertex.movie_id, movie1.movie_id)
+        >>> g.recommend_movies(user_vertex.movie_id, user_pref)
+        ['Movie1']
         """
         movies = {}
         final_movies = []
@@ -279,7 +334,7 @@ class MovieGraph:
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-
+    #
     # import python_ta.contracts
     # python_ta.contracts.DEBUG_CONTRACTS = False
     # python_ta.contracts.check_all_contracts()
@@ -287,7 +342,7 @@ if __name__ == '__main__':
     # import python_ta
     #
     # python_ta.check_all(config={
-    #   'max-line-length': 100,
-    #   'extra-imports': ['dataclasses', 'typing', 'pandas'],
-    #   'allowed-io': []
+    #     'max-line-length': 100,
+    #     'extra-imports': ['dataclasses', 'typing', 'pandas'],
+    #     'allowed-io': []
     # })

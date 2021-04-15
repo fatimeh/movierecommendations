@@ -1,4 +1,4 @@
-"""CSC111 Winter 2021 Final Project
+"""CSC111 Winter 2021 Final Project: Main
 
 Overview and Description
 ========================
@@ -23,8 +23,8 @@ from visualization import main_runner, display_recommended_movies
 
 
 def main() -> None:
-    """"
-    The main function that will recommend movies to the user based on their preferences.
+    """"The main function that will recommend movies to the user based on their inputted
+    preferences.
     """
     # Call the user interface functions to get the user input
     # Create user vertex and movie graph based on input
@@ -44,7 +44,7 @@ def main() -> None:
 
     start_year = user_input['release_year'][0]
     stop_year = user_input['release_year'][1]
-    year_range = {year for year in range(start_year, stop_year)}
+    year_range = set(range(start_year, stop_year))
 
     genre = user_input['genres']
 
@@ -57,7 +57,7 @@ def main() -> None:
     else:
         duration_tpl = (181, 809)
 
-    duration_range = {duration for duration in range(duration_tpl[0], duration_tpl[1])}
+    duration_range = set(range(duration_tpl[0], duration_tpl[1]))
 
     language = user_input['language']
 
@@ -85,3 +85,5 @@ if __name__ == '__main__':
     #     'extra-imports': ['entities', 'visualization'],
     #     'allowed-io': []
     # })
+
+    # main()
