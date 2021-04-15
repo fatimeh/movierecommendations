@@ -6,8 +6,9 @@ Overview and Description
 This Python module contains the functions for the user interface and
 visualization of the movie recommender system.
 
-We used the tutorial available at https://www.geeksforgeeks.org/how-to-get-selected-value-from-listbox-in-tkinter/ 
-as a guide to help us implement the functions involving the Tkinter listboxes.
+We used the tutorial available at
+https://www.geeksforgeeks.org/how-to-get-selected-value-from-listbox-in-tkinter/
+as a guide to help us implement the functions involving the Tkinter listbox.
 
 Copyright and Usage Information
 ===============================
