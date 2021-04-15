@@ -8,7 +8,7 @@ visualization of the movie recommender system.
 
 We used the tutorial available at
 https://www.geeksforgeeks.org/how-to-get-selected-value-from-listbox-in-tkinter/
-as a guide to help us implement the functions involving the Tkinter listbox, we made  
+as a guide to help us implement the functions involving the Tkinter listbox, we made
 changes to customize it in order to fit the purposes of our project.
 
 Copyright and Usage Information
@@ -26,6 +26,63 @@ from __future__ import annotations
 from typing import Dict, List, Any, Tuple
 import tkinter as tk
 import pandas as pd
+
+
+def main_runner() -> Tuple[list, dict]:
+    """Display the ranking and the questions window to get the user input and return
+    the output as a tuple where the first element is the ranking output and
+    the second element is a dictionary containing the user's answers to the four questions."""
+    rankings = runner_rankings()
+    genres, languages = load_genres_and_languages('IMDb movies.csv')
+    questions = runner_questions(genres, languages)
+    return (rankings, questions)
+
+
+def runner_rankings() -> list:
+    """Return the a list of rankings that the user chooses.
+    The first item is the attributes that the user ranks first which is the most important, and
+    the second item is the second most important attribute that the user ranks and so on.
+
+    The ranking parameter is a list with the 4 attributes that the users will rank.
+
+    """
+    ranking = ['Genre', 'Release Year', 'Language', 'Duration']
+    user_ranking = []
+    window = tk.Tk()
+    window.geometry("650x400")
+    window.configure(bg="black")
+    tk.Label(window, text="Rankings", fg="white", bg="black").pack()
+    tk.Label(window, text='', fg="white", bg="black").pack()
+    tk.Label(window, text="Please take a look at the following 4 attributes "
+                          "and rank them in order of importance to you.", fg="white",
+             bg="black").pack()
+    tk.Label(window, text="First, select the most important attribute and click submit.",
+             fg="white", bg="black").pack()
+    tk.Label(window, text="Then, select the next attribute in your rankings and click "
+                          "submit.", fg="white", bg="black").pack()
+    tk.Label(window, text="Repeatedly select and click submit in your chosen order of importance"
+                          " until you have submitted all four attributes.", fg="white",
+             bg="black").pack()
+    tk.Label(window, text='', fg="white", bg="black").pack()
+    ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE', fg="white", bg="blue")
+    ranking_listbox.insert(1, ranking[0])
+    ranking_listbox.insert(2, ranking[1])
+    ranking_listbox.insert(3, ranking[2])
+    ranking_listbox.insert(4, ranking[3])
+
+    def submit() -> None:
+        """Collect user selection and delete the option from listbox."""
+        user_ranking.append(ranking[ranking_listbox.curselection()[0]])
+        ranking_listbox.delete(ranking_listbox.curselection()[0])
+        if ranking_listbox.size() == 0:
+            window.destroy()
+
+    submit_button = tk.Button(window, text='Submit', command=submit, fg="black")
+    ranking_listbox.pack()
+    tk.Label(window, text='', fg="white", bg="black").pack()
+    submit_button.pack()
+    window.mainloop()
+    return user_ranking
 
 
 def load_genres_and_languages(movies_file: str) -> Tuple[List, List]:
@@ -78,26 +135,6 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
 
     window.mainloop()
     return answers_so_far
-
-
-def create_decade_options(start_year: int, end_year: int) -> tuple:
-    """Return a tuple where the first element is a list containing the string representation of
-     all the decades between the starting year and ending yearand the second element is a list
-     containing the same decades except that each item is a tuple of integers where the first
-     integer is the starting year of that decade and the second number
-     is the ending year of that decade.
-
-    Preconditions:
-        - start_year >= 0
-        - end_year >= 0
-    """
-    decades_string = []
-    decades_tuple = []
-    for i in range(start_year, end_year, 10):
-        decades_string.append(f'{i}' + '-' + f'{i + 10}')
-        decades_tuple.append((i, i + 10))
-
-    return (decades_string, decades_tuple)
 
 
 def create_genres_listbox(window: tk.Tk, user_answer: dict, genres: List[str]) -> None:
@@ -204,6 +241,26 @@ def create_year_listbox(window: tk.Tk, user_answer: dict) -> None:
     year_listbox.pack()
 
 
+def create_decade_options(start_year: int, end_year: int) -> tuple:
+    """Return a tuple where the first element is a list containing the string representation of
+     all the decades between the starting year and ending yearand the second element is a list
+     containing the same decades except that each item is a tuple of integers where the first
+     integer is the starting year of that decade and the second number
+     is the ending year of that decade.
+
+    Preconditions:
+        - start_year >= 0
+        - end_year >= 0
+    """
+    decades_string = []
+    decades_tuple = []
+    for i in range(start_year, end_year, 10):
+        decades_string.append(f'{i}' + '-' + f'{i + 10}')
+        decades_tuple.append((i, i + 10))
+
+    return (decades_string, decades_tuple)
+
+
 def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -> None:
     """Create the listbox that allows user to choose their language preference.
 
@@ -237,63 +294,6 @@ def create_language_listbox(window: tk.Tk, user_answer: dict, languages: List) -
     submit_button = tk.Button(language_frame, text='Submit', command=submit, fg="black")
     submit_button.pack(side='bottom')
     language_listbox.pack()
-
-
-def runner_rankings() -> list:
-    """Return the a list of rankings that the user chooses.
-    The first item is the attributes that the user ranks first which is the most important, and
-    the second item is the second most important attribute that the user ranks and so on.
-
-    The ranking parameter is a list with the 4 attributes that the users will rank.
-
-    """
-    ranking = ['Genre', 'Release Year', 'Language', 'Duration']
-    user_ranking = []
-    window = tk.Tk()
-    window.geometry("650x400")
-    window.configure(bg="black")
-    tk.Label(window, text="Rankings", fg="white", bg="black").pack()
-    tk.Label(window, text='', fg="white", bg="black").pack()
-    tk.Label(window, text="Please take a look at the following 4 attributes "
-                          "and rank them in order of importance to you.", fg="white",
-             bg="black").pack()
-    tk.Label(window, text="First, select the most important attribute and click submit.",
-             fg="white", bg="black").pack()
-    tk.Label(window, text="Then, select the next attribute in your rankings and click "
-                          "submit.", fg="white", bg="black").pack()
-    tk.Label(window, text="Repeatedly select and click submit in your chosen order of importance"
-                          " until you have submitted all four attributes.", fg="white",
-             bg="black").pack()
-    tk.Label(window, text='', fg="white", bg="black").pack()
-    ranking_listbox = tk.Listbox(window, height=5, selectmode='SINGLE', fg="white", bg="blue")
-    ranking_listbox.insert(1, ranking[0])
-    ranking_listbox.insert(2, ranking[1])
-    ranking_listbox.insert(3, ranking[2])
-    ranking_listbox.insert(4, ranking[3])
-
-    def submit() -> None:
-        """Collect user selection and delete the option from listbox."""
-        user_ranking.append(ranking[ranking_listbox.curselection()[0]])
-        ranking_listbox.delete(ranking_listbox.curselection()[0])
-        if ranking_listbox.size() == 0:
-            window.destroy()
-
-    submit_button = tk.Button(window, text='Submit', command=submit, fg="black")
-    ranking_listbox.pack()
-    tk.Label(window, text='', fg="white", bg="black").pack()
-    submit_button.pack()
-    window.mainloop()
-    return user_ranking
-
-
-def main_runner() -> Tuple[list, dict]:
-    """Display the ranking and the questions window to get the user input and return
-    the output as a tuple where the first element is the ranking output and
-    the second element is a dictionary containing the user's answers to the four questions."""
-    rankings = runner_rankings()
-    genres, languages = load_genres_and_languages('IMDb movies.csv')
-    questions = runner_questions(genres, languages)
-    return (rankings, questions)
 
 
 def display_recommended_movies(recommended_movies: List) -> None:
