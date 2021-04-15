@@ -50,7 +50,7 @@ def runner_rankings() -> list:
     ranking = ['Genre', 'Release Year', 'Language', 'Duration']
     user_ranking = []
     window = tk.Tk()
-    window.geometry("650x400")
+    window.geometry("700x400")
     window.configure(bg="black")
     tk.Label(window, text="Rankings", fg="white", bg="black").pack()
     tk.Label(window, text='', fg="white", bg="black").pack()
@@ -127,7 +127,7 @@ def runner_questions(genres: List, languages: List) -> Dict[str, Any]:
     answers_so_far = {}
     duration = ['Short(<60 min)', 'Medium (60-180 min)', 'Long (>180 min)']
     window = tk.Tk()
-    window.geometry("350x400")
+    window.geometry("500x450")
     window.configure(bg="black")
     create_genres_listbox(window, answers_so_far, genres)
     create_duration_listbox(window, answers_so_far, duration)
