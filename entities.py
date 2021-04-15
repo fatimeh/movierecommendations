@@ -81,6 +81,12 @@ class Movie:
         - duration: the length of the movie (in minutes)
         - language: the language the movie was written in
         - rating: the total average weighted rating the movie received
+
+    Representation Invariants:
+        - 1890 <= self.release_year <= 2020
+        - 0 < self.duration < 810
+        - 0.0 <= self.rating <= 10.0
+
     """
     movie_id: str
     title: str
@@ -123,6 +129,10 @@ class _MovieVertex:
     Instance Attributes:
         - item: The data stored in this vertex, representing a Movie object.
         - neighbours: The vertices that are adjacent to this vertex.
+
+    Representation Invariants:
+        - self not in self.neighbours
+        - all(self in u.neighbours for u in self.neighbours)
 
     """
 

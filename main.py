@@ -48,7 +48,7 @@ def main() -> None:
     duration_str = user_input['duration']
 
     if duration_str == 'Short(<60 min)':
-        duration_tpl = (0, 60)
+        duration_tpl = (41, 60)
     elif duration_str == 'Medium (60-180 min)':
         duration_tpl = (60, 181)
     else:
